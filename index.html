@@ -1,0 +1,1115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- ═══════════════════════════════════════════════════════════════
+     ZYREZ IT | Navbar + Cinematic Hero  (paste into ONE GHL Custom HTML block)
+     Scoped: .zyrez-hero-root / .zyrez-hero-* / .zyrez-nav-* / .zyrez-menu-*
+     ═══════════════════════════════════════════════════════════════ -->
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+      }
+      /* ===== 1. CONFIG: colors, sizes, orbit look (change values here) ===== */
+      .zyrez-hero-root {
+        --zyrez-bg: #000;
+        --zyrez-gold: #ffcc00;
+        --zyrez-gold-light: #ffdd65;
+        --zyrez-text: #fff;
+        --zyrez-muted: rgba(255, 255, 255, 0.68);
+        --zyrez-font: "Inter", "Helvetica Neue", Arial, sans-serif;
+        --zyrez-card-w: 184px; /* floating card width */
+        --zyrez-card-blur: 10px; /* glass blur (0px = faster on weak phones) */
+        --zyrez-orbit-cy: 56%; /* vertical center of the orbit inside the visual area */
+        --zyrez-stage-h: clamp(
+          300px,
+          46vw,
+          600px
+        ); /* height of the hero image area */
+        --zyrez-ease: cubic-bezier(0.76, 0, 0.24, 1);
+        position: relative;
+        display: block;
+        width: 100%;
+        background: var(--zyrez-bg);
+        color: var(--zyrez-text);
+        font-family: var(--zyrez-font);
+      }
+      .zyrez-hero-root,
+      .zyrez-hero-root * {
+        box-sizing: border-box;
+      }
+      /* local reset (Tailwind/GHL safe) */
+      .zyrez-hero-root :where(h1, p, ul, li) {
+        margin: 0;
+        padding: 0;
+      }
+      .zyrez-hero-root :where(ul) {
+        list-style: none;
+      }
+      .zyrez-hero-root :where(a) {
+        color: inherit;
+        text-decoration: none;
+      }
+      .zyrez-hero-root :where(button) {
+        font: inherit;
+        color: inherit;
+        cursor: pointer;
+      }
+
+      /* ===== 2. NAVBAR ===== */
+      .zyrez-nav {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 99991;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 22px clamp(18px, 5vw, 64px);
+      }
+      .zyrez-nav--fixed {
+        position: fixed;
+      }
+      .zyrez-nav-logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 800;
+        font-size: 1.25rem;
+        letter-spacing: 0.04em;
+      }
+      .zyrez-nav-logo img {
+        display: block;
+        height: 41px;
+        width: auto;
+      }
+      .zyrez-nav-btn {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 6px 6px 6px 18px;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 204, 0, 0.55);
+        background: rgba(10, 10, 10, 0.7);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        line-height: 1;
+        transition:
+          border-color 0.3s,
+          box-shadow 0.3s,
+          background 0.3s;
+      }
+      .zyrez-nav-btn:hover {
+        border-color: var(--zyrez-gold);
+        box-shadow: 0 0 24px rgba(255, 204, 0, 0.28);
+        background: rgba(255, 204, 0, 0.08);
+      }
+      .zyrez-nav-label {
+        display: block;
+        height: 12px;
+        overflow: hidden;
+        text-transform: uppercase;
+      }
+      .zyrez-nav-label span {
+        display: block;
+        height: 12px;
+        line-height: 12px;
+        transition: transform 0.5s var(--zyrez-ease);
+      }
+      .zyrez-nav-icon {
+        position: relative;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: linear-gradient(
+          135deg,
+          var(--zyrez-gold-light),
+          var(--zyrez-gold)
+        );
+        transition: transform 0.5s var(--zyrez-ease);
+      }
+      .zyrez-nav-icon i {
+        position: absolute;
+        left: 9px;
+        width: 14px;
+        height: 2px;
+        border-radius: 2px;
+        background: #000;
+        transition:
+          top 0.45s var(--zyrez-ease),
+          transform 0.45s var(--zyrez-ease);
+      }
+      .zyrez-nav-icon i:nth-child(1) {
+        top: 12px;
+      }
+      .zyrez-nav-icon i:nth-child(2) {
+        top: 18px;
+      }
+      .zyrez-nav-btn:hover .zyrez-nav-icon i:nth-child(1) {
+        top: 10px;
+      }
+      .zyrez-nav-btn:hover .zyrez-nav-icon i:nth-child(2) {
+        top: 20px;
+      }
+      .zyrez-menu-open .zyrez-nav-label span {
+        transform: translateY(-100%);
+      }
+      .zyrez-menu-open .zyrez-nav-icon {
+        transform: rotate(90deg);
+      }
+      .zyrez-menu-open .zyrez-nav-icon i:nth-child(1) {
+        top: 15px;
+        transform: rotate(45deg);
+      }
+      .zyrez-menu-open .zyrez-nav-icon i:nth-child(2) {
+        top: 15px;
+        transform: rotate(-45deg);
+      }
+
+      /* ===== 3. FULLSCREEN MENU ===== */
+      .zyrez-menu {
+        position: fixed;
+        inset: 0;
+        z-index: 99990;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 100px clamp(24px, 8vw, 120px) 40px;
+        background:
+          radial-gradient(
+            circle at 85% 15%,
+            rgba(255, 204, 0, 0.12),
+            transparent 50%
+          ),
+          #050505;
+        clip-path: circle(0 at var(--zyrez-mx, 90%) var(--zyrez-my, 40px));
+        visibility: hidden;
+        transition:
+          clip-path 0.9s var(--zyrez-ease),
+          visibility 0s 0.9s;
+      }
+      .zyrez-menu-open .zyrez-menu {
+        clip-path: circle(150% at var(--zyrez-mx, 90%) var(--zyrez-my, 40px));
+        visibility: visible;
+        transition:
+          clip-path 0.9s var(--zyrez-ease),
+          visibility 0s;
+      }
+      .zyrez-menu-item {
+        opacity: 0;
+        transform: translateY(40px);
+        transition:
+          opacity 0.4s,
+          transform 0.4s;
+      }
+      .zyrez-menu-open .zyrez-menu-item {
+        opacity: 1;
+        transform: none;
+        transition:
+          opacity 0.7s,
+          transform 0.9s var(--zyrez-ease);
+        transition-delay: calc(0.3s + var(--i) * 0.07s);
+      }
+      .zyrez-menu-link {
+        display: flex;
+        align-items: baseline;
+        gap: 18px;
+        padding: 0.1em 0;
+        font-size: clamp(2rem, 7vw, 4.8rem);
+        font-weight: 800;
+        line-height: 1.1;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.85);
+        transition:
+          color 0.3s,
+          padding 0.3s;
+      }
+      .zyrez-menu-link small {
+        font-size: 0.8rem;
+        letter-spacing: 0.2em;
+        color: var(--zyrez-gold);
+      }
+      .zyrez-menu-link:hover {
+        color: var(--zyrez-gold);
+        padding-left: 14px;
+      }
+      .zyrez-menu-foot {
+        margin-top: 40px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px 32px;
+        font-size: 13px;
+        letter-spacing: 0.08em;
+        color: var(--zyrez-muted);
+      }
+      .zyrez-menu-foot a:hover {
+        color: var(--zyrez-gold);
+      }
+
+      /* ===== 4. HERO LAYOUT ===== */
+      .zyrez-hero {
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        min-height: 100vh;
+        min-height: 100svh;
+        padding: clamp(96px, 13vh, 140px) 20px 0;
+        background:
+          radial-gradient(
+            ellipse 60% 40% at 50% 72%,
+            rgba(255, 204, 0, 0.12),
+            transparent 70%
+          ),
+          linear-gradient(#0b0b0b, #000 60%);
+      }
+      .zyrez-hero-copy {
+        position: relative;
+        z-index: 6;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        order: 1;
+      }
+      .zyrez-hero-eyebrow {
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.5em;
+        padding-left: 0.5em;
+        text-transform: uppercase;
+      }
+      .zyrez-hero-title {
+        margin-top: 18px;
+        max-width: 1000px;
+        font-size: clamp(1.5rem, 3.5vw, 3.2rem);
+        line-height: 1.04;
+        font-weight: 800;
+        letter-spacing: -0.01em;
+        text-transform: uppercase;
+        text-wrap: balance;
+        background: linear-gradient(180deg, #fff, #cfcfcf);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .zyrez-hero-accent {
+        background: linear-gradient(
+          90deg,
+          var(--zyrez-gold-light),
+          var(--zyrez-gold)
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .zyrez-hero-text {
+        margin-top: 20px;
+        max-width: 620px;
+        font-size: clamp(0.95rem, 1.4vw, 1.1rem);
+        line-height: 1.6;
+        color: var(--zyrez-muted);
+      }
+      .zyrez-hero-cta {
+        order: 2;
+        position: relative;
+        z-index: 7;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 14px;
+        margin-top: 28px;
+      }
+      .zyrez-hero-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        line-height: 1;
+        text-transform: uppercase;
+        transition:
+          transform 0.3s,
+          box-shadow 0.3s,
+          background 0.3s,
+          border-color 0.3s;
+      }
+      .zyrez-hero-btn--gold {
+        padding: 6px 6px 6px 22px;
+        background: linear-gradient(
+          135deg,
+          var(--zyrez-gold-light),
+          var(--zyrez-gold)
+        );
+        color: #000;
+      }
+      .zyrez-hero-btn--gold:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(255, 204, 0, 0.35);
+      }
+      .zyrez-hero-btn--ghost {
+        height: 44px;
+        padding: 0 24px;
+        border: 1px solid rgba(255, 204, 0, 0.5);
+        background: rgba(0, 0, 0, 0.4);
+      }
+      .zyrez-hero-btn--ghost:hover {
+        background: rgba(255, 204, 0, 0.12);
+        border-color: var(--zyrez-gold);
+      }
+      .zyrez-hero-btn-arrow {
+        display: grid;
+        place-items: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: #000;
+        color: var(--zyrez-gold);
+        transition: transform 0.3s;
+      }
+      .zyrez-hero-btn--gold:hover .zyrez-hero-btn-arrow {
+        transform: translateX(3px);
+      }
+
+      /* ===== 5. VISUAL STAGE: image + orbit ===== */
+      .zyrez-hero-stage {
+        position: relative;
+        order: 3;
+        flex: none;
+        width: min(980px, 100%);
+        height: var(--zyrez-stage-h);
+        margin-top: auto;
+        padding-top: 10px;
+      }
+      .zyrez-hero-giant {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -0.08em;
+        z-index: 1;
+        text-align: center;
+        white-space: nowrap;
+        pointer-events: none;
+        user-select: none;
+        font-size: clamp(5rem, 23vw, 22rem);
+        font-weight: 900;
+        line-height: 0.8;
+        letter-spacing: -0.02em;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.16),
+          rgba(255, 255, 255, 0.02)
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .zyrez-hero-ring {
+        position: absolute;
+        left: 50%;
+        top: var(--zyrez-orbit-cy);
+        width: 88%;
+        height: 68%;
+        transform: translate(-50%, -50%);
+        border: 1px dashed rgba(255, 204, 0, 0.2);
+        border-radius: 50%;
+        z-index: 2;
+        pointer-events: none;
+      }
+      .zyrez-hero-visual {
+        position: absolute;
+        inset: 0;
+        z-index: 3;
+        will-change: transform;
+      }
+      .zyrez-hero-img,
+      .zyrez-hero-ph {
+        position: absolute;
+        left: 50%;
+        bottom: 0;
+        height: 100%;
+        width: auto;
+        max-width: 92%;
+        transform: translateX(-50%);
+        object-fit: contain;
+        -webkit-mask-image: linear-gradient(#000 78%, transparent);
+        mask-image: linear-gradient(#000 78%, transparent);
+      }
+      .zyrez-hero-img {
+        opacity: 0;
+      }
+      .zyrez-has-img .zyrez-hero-img {
+        opacity: 1;
+      }
+      .zyrez-has-img .zyrez-hero-ph {
+        display: none;
+      }
+
+      /* floating glass cards */
+      .zyrez-hero-orbit {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+      .zyrez-hero-card {
+        position: absolute;
+        left: 50%;
+        top: var(--zyrez-orbit-cy);
+        z-index: 5;
+        width: var(--zyrez-card-w);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 14px;
+        border-radius: 18px;
+        text-align: left;
+        will-change: transform;
+        background: linear-gradient(
+          145deg,
+          rgba(255, 255, 255, 0.1),
+          rgba(255, 255, 255, 0.03)
+        );
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        -webkit-backdrop-filter: blur(var(--zyrez-card-blur));
+        backdrop-filter: blur(var(--zyrez-card-blur));
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5);
+      }
+      .zyrez-hero-ico {
+        flex: none;
+        display: grid;
+        place-items: center;
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        background: linear-gradient(
+          135deg,
+          var(--zyrez-gold-light),
+          var(--zyrez-gold)
+        );
+        color: #000;
+      }
+      .zyrez-hero-ico svg {
+        width: 18px;
+        height: 18px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      .zyrez-hero-card b {
+        display: block;
+        font-size: 14px;
+        line-height: 1.2;
+      }
+      .zyrez-hero-card small {
+        display: block;
+        margin-top: 2px;
+        font-size: 11px;
+        line-height: 1.3;
+        color: var(--zyrez-muted);
+      }
+      .zyrez-hero-card em {
+        font-style: normal;
+        color: var(--zyrez-gold);
+      }
+      .zyrez-hero-avs {
+        display: flex;
+        flex: none;
+      }
+      .zyrez-hero-avs i {
+        width: 24px;
+        height: 24px;
+        margin-left: -8px;
+        border-radius: 50%;
+        border: 2px solid #111;
+        background: linear-gradient(135deg, #ffdd65, #7a5c00);
+      }
+      .zyrez-hero-avs i:first-child {
+        margin-left: 0;
+      }
+      .zyrez-hero-bars {
+        display: flex;
+        flex: none;
+        align-items: flex-end;
+        gap: 3px;
+        height: 26px;
+      }
+      .zyrez-hero-bars i {
+        width: 5px;
+        border-radius: 2px;
+        background: linear-gradient(var(--zyrez-gold-light), var(--zyrez-gold));
+      }
+
+      /* ===== 6. ENTRANCE (only when JS is running) ===== */
+      .zyrez-hero-js .zyrez-hero-in {
+        opacity: 0;
+        transform: translateY(24px);
+        transition:
+          opacity 0.9s,
+          transform 1s var(--zyrez-ease);
+        transition-delay: calc(var(--d, 0) * 1s);
+      }
+      .zyrez-hero-js .zyrez-hero-visual,
+      .zyrez-hero-js .zyrez-hero-card,
+      .zyrez-hero-js .zyrez-hero-giant {
+        opacity: 0;
+        transition: opacity 1.4s 0.3s;
+      }
+      .zyrez-hero-ready .zyrez-hero-in {
+        opacity: 1;
+        transform: none;
+      }
+      .zyrez-hero-ready .zyrez-hero-visual,
+      .zyrez-hero-ready .zyrez-hero-card,
+      .zyrez-hero-ready .zyrez-hero-giant {
+        opacity: 1;
+      }
+
+      /* ===== 7. RESPONSIVE ===== */
+      @media (min-width: 900px) {
+        .zyrez-hero-stage {
+          order: 2;
+        }
+        .zyrez-hero-cta {
+          order: 3;
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 34px;
+          margin-top: 0;
+        }
+      }
+      @media (max-width: 899px) {
+        .zyrez-hero-root {
+          --zyrez-card-w: 150px;
+          --zyrez-card-blur: 0px;
+          --zyrez-stage-h: clamp(320px, 84vw, 470px);
+        }
+        .zyrez-hero-stage {
+          margin-top: 18px;
+        }
+      }
+      @media (max-width: 560px) {
+        .zyrez-hero-root {
+          --zyrez-card-w: 132px;
+        }
+        .zyrez-hero-eyebrow {
+          letter-spacing: 0.3em;
+          padding-left: 0.3em;
+        }
+        .zyrez-hero-card {
+          padding: 9px 10px;
+          border-radius: 14px;
+          gap: 8px;
+        }
+        .zyrez-hero-card b {
+          font-size: 12px;
+        }
+        .zyrez-hero-card small {
+          font-size: 10px;
+        }
+        .zyrez-hero-ico {
+          width: 26px;
+          height: 26px;
+        }
+        .zyrez-hero-ico svg {
+          width: 15px;
+          height: 15px;
+        }
+        .zyrez-nav-logo img {
+          height: 32px;
+        }
+      }
+    </style>
+
+    <div class="zyrez-hero-root" id="zyrez-hero-root">
+      <!-- ============ NAVBAR ============ -->
+      <header class="zyrez-nav">
+        <a class="zyrez-nav-logo" href="/">
+          <!-- REPLACE LOGO HERE (image URL, or paste your own <svg>) -->
+          <img
+            src="https://assets.cdn.filesafe.space/bGYkTtwdgUDkTHqNb1v2/media/6ac7a7d0195f9172edefec8e.png"
+            alt="ZYREZ IT"
+          />
+        </a>
+        <button
+          class="zyrez-nav-btn"
+          type="button"
+          aria-expanded="false"
+          aria-controls="zyrez-menu"
+        >
+          <span class="zyrez-nav-label"
+            ><span>Menu</span><span>Close</span></span
+          >
+          <span class="zyrez-nav-icon"><i></i><i></i></span>
+        </button>
+      </header>
+
+      <!-- ============ FULLSCREEN MENU (items are built by JS from CONFIG.menuItems) ============ -->
+      <nav
+        class="zyrez-menu"
+        id="zyrez-menu"
+        aria-label="Main menu"
+        aria-hidden="true"
+      >
+        <ul class="zyrez-menu-list"></ul>
+        <div class="zyrez-menu-foot">
+          <!-- REPLACE contact / social links -->
+          <a href="mailto:hello@example.com">hello@example.com</a>
+          <a href="#">Instagram</a>
+          <a href="#">LinkedIn</a>
+        </div>
+      </nav>
+
+      <!-- ============ HERO ============ -->
+      <section class="zyrez-hero">
+        <div class="zyrez-hero-copy">
+          <div class="zyrez-hero-eyebrow zyrez-hero-in" style="--d: 0">
+            Marketing Agency
+          </div>
+          <h1 class="zyrez-hero-title zyrez-hero-in" style="--d: 0.1">
+            Powering businesses with
+            <span class="zyrez-hero-accent">smarter digital solutions</span>
+          </h1>
+          <p class="zyrez-hero-text zyrez-hero-in" style="--d: 0.2">
+            We build the digital systems, experiences, and strategies that help
+            modern businesses look better, work smarter, and scale with
+            confidence.
+          </p>
+        </div>
+
+        <div class="zyrez-hero-cta zyrez-hero-in" style="--d: 0.3">
+          <!-- REPLACE CTA TEXT / LINKS HERE -->
+          <a class="zyrez-hero-btn zyrez-hero-btn--gold" href="#contact"
+            >Book a call
+            <span class="zyrez-hero-btn-arrow"
+              ><svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M5 12h14M13 6l6 6-6 6" /></svg
+            ></span>
+          </a>
+          <a class="zyrez-hero-btn zyrez-hero-btn--ghost" href="#services"
+            >View services</a
+          >
+        </div>
+        <div class="zyrez-hero-stage">
+          <span class="zyrez-hero-giant" aria-hidden="true">ZYREZ IT</span>
+          <span class="zyrez-hero-ring" aria-hidden="true"></span>
+
+          <div class="zyrez-hero-visual">
+            <!-- REPLACE HERO IMAGE HERE: paste a transparent PNG/WebP URL (person cut-out) between the quotes of src -->
+            <img
+              class="zyrez-hero-img"
+              src="https://assets.cdn.filesafe.space/bGYkTtwdgUDkTHqNb1v2/media/6ac7a79cbbad531ac830bfa8.svg"
+              alt=""
+            />
+          </div>
+          <!-- ============ FLOATING CARDS ============
+           data-rx / data-ry : orbit width / height (fraction of the visual area)
+           data-speed        : degrees per second (negative = opposite direction)
+           data-phase        : start angle (0-360)
+           data-depth        : mouse parallax strength (0-1)
+           data-float / data-rot : floating (px) and tilt (deg)
+           data-min          : show only when screen width >= this (0 = also on mobile) -->
+          <div class="zyrez-hero-orbit">
+            <!-- FLOATING CARD 01 -->
+            <div
+              class="zyrez-hero-card"
+              data-rx=".46"
+              data-ry=".26"
+              data-speed="9"
+              data-phase="200"
+              data-depth=".8"
+              data-float="8"
+              data-rot="5"
+              data-min="0"
+            >
+              <span class="zyrez-hero-ico"
+                ><svg viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="9" />
+                  <circle cx="12" cy="12" r="4" /></svg
+              ></span>
+              <span><b>Focus</b><small>Deep work, bigger results</small></span>
+            </div>
+
+            <!-- FLOATING CARD 02 -->
+            <div
+              class="zyrez-hero-card"
+              data-rx=".44"
+              data-ry=".22"
+              data-speed="-7"
+              data-phase="330"
+              data-depth=".6"
+              data-float="10"
+              data-rot="4"
+              data-min="768"
+            >
+              <span class="zyrez-hero-ico"
+                ><svg viewBox="0 0 24 24">
+                  <path
+                    d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"
+                  /></svg
+              ></span>
+              <span><b>Plan</b><small>Turn ideas into action</small></span>
+            </div>
+
+            <!-- FLOATING CARD 03 -->
+            <div
+              class="zyrez-hero-card"
+              data-rx=".30"
+              data-ry=".34"
+              data-speed="11"
+              data-phase="90"
+              data-depth="1"
+              data-float="7"
+              data-rot="6"
+              data-min="0"
+            >
+              <span class="zyrez-hero-ico"
+                ><svg viewBox="0 0 24 24">
+                  <path
+                    d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"
+                  /></svg
+              ></span>
+              <span><b>Ideas</b><small>Capture everything</small></span>
+            </div>
+
+            <!-- FLOATING CARD 04 (clients) -->
+            <div
+              class="zyrez-hero-card"
+              data-rx=".50"
+              data-ry=".16"
+              data-speed="-6"
+              data-phase="20"
+              data-depth=".5"
+              data-float="9"
+              data-rot="4"
+              data-min="0"
+            >
+              <span class="zyrez-hero-avs"><i></i><i></i><i></i></span>
+              <span
+                ><b><em>50+</em> clients</b
+                ><small>Trusted worldwide</small></span
+              >
+            </div>
+
+            <!-- FLOATING CARD 05 (growth) -->
+            <div
+              class="zyrez-hero-card"
+              data-rx=".40"
+              data-ry=".30"
+              data-speed="8"
+              data-phase="150"
+              data-depth=".7"
+              data-float="8"
+              data-rot="5"
+              data-min="768"
+            >
+              <span class="zyrez-hero-bars"
+                ><i style="height: 9px"></i><i style="height: 14px"></i
+                ><i style="height: 11px"></i><i style="height: 20px"></i
+                ><i style="height: 26px"></i
+              ></span>
+              <span
+                ><b><em>+240%</em> growth</b
+                ><small>Avg. client results</small></span
+              >
+            </div>
+
+            <!-- FLOATING CARD 06 (automation) -->
+            <div
+              class="zyrez-hero-card"
+              data-rx=".52"
+              data-ry=".24"
+              data-speed="-9"
+              data-phase="265"
+              data-depth=".9"
+              data-float="10"
+              data-rot="4"
+              data-min="1100"
+            >
+              <span class="zyrez-hero-ico"
+                ><svg viewBox="0 0 24 24">
+                  <path d="M13 2 4 14h7l-1 8 9-12h-7z" /></svg
+              ></span>
+              <span><b>Automations</b><small>Live 24/7 workflows</small></span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      (function () {
+        "use strict";
+
+        /* ===== CONFIG (easy settings) ===== */
+        var CONFIG = {
+          waitForPreloader: true, // start hero animation when the ZYREZ preloader begins its exit
+          fullBleed: true, // stretch edge-to-edge even inside a GHL column
+          fixedNav: false, // true = navbar stays on screen while scrolling
+          lockScroll: true, // lock page scroll while the menu is open
+          orbitSpeed: 1, // 0.5 = slower, 2 = faster (all cards)
+          floatAmount: 1, // up/down floating strength
+          mouseStrength: 1, // desktop mouse parallax (0 = off)
+          /* MENU ITEMS: replace with your real GHL page links */
+          menuItems: [
+            { label: "Home", href: "#" },
+            { label: "Services", href: "#services" },
+            { label: "Work", href: "#work" },
+            { label: "About", href: "#about" },
+            { label: "Contact", href: "#contact" },
+          ],
+        };
+
+        var root = document.getElementById("zyrez-hero-root");
+        if (!root) return;
+        var $ = function (s) {
+          return root.querySelector(s);
+        };
+        root.classList.add("zyrez-hero-js");
+
+        /* ---- Full-bleed: break out of the GHL column without causing sideways scroll ---- */
+        function bleed() {
+          if (!CONFIG.fullBleed) return;
+          root.style.width = "100%";
+          root.style.marginLeft = "0";
+          var left = root.getBoundingClientRect().left;
+          root.style.width = document.documentElement.clientWidth + "px";
+          root.style.marginLeft = -left + "px";
+        }
+
+        /* ---- Navbar + menu ---- */
+        if (CONFIG.fixedNav) $(".zyrez-nav").classList.add("zyrez-nav--fixed");
+        var logoImg = $(".zyrez-nav-logo img");
+        logoImg.addEventListener("error", function () {
+          logoImg.style.display = "none";
+        });
+
+        var btn = $(".zyrez-nav-btn"),
+          menu = $(".zyrez-menu"),
+          list = $(".zyrez-menu-list");
+        CONFIG.menuItems.forEach(function (it, i) {
+          var li = document.createElement("li"),
+            a = document.createElement("a"),
+            n = document.createElement("small");
+          li.className = "zyrez-menu-item";
+          li.style.setProperty("--i", i);
+          a.className = "zyrez-menu-link";
+          a.href = it.href;
+          n.textContent = (i < 9 ? "0" : "") + (i + 1);
+          a.appendChild(n);
+          a.appendChild(document.createTextNode(it.label));
+          li.appendChild(a);
+          list.appendChild(li);
+        });
+        function setMenu(open) {
+          var r = btn.getBoundingClientRect(); // the menu "opens" from the button
+          root.style.setProperty("--zyrez-mx", r.left + r.width / 2 + "px");
+          root.style.setProperty("--zyrez-my", r.top + r.height / 2 + "px");
+          root.classList.toggle("zyrez-menu-open", open);
+          btn.setAttribute("aria-expanded", open);
+          menu.setAttribute("aria-hidden", !open);
+          if (CONFIG.lockScroll)
+            document.documentElement.style.overflow = open ? "hidden" : "";
+        }
+        btn.addEventListener("click", function () {
+          setMenu(!root.classList.contains("zyrez-menu-open"));
+        });
+        list.addEventListener("click", function (e) {
+          if (e.target.closest("a")) setMenu(false);
+        });
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "Escape") setMenu(false);
+        });
+
+        /* ---- Hero image placeholder: hide it once a real image loads ---- */
+        var img = $(".zyrez-hero-img");
+        function hasImg() {
+          root.classList.add("zyrez-has-img");
+        }
+        if (img.getAttribute("src")) {
+          if (img.complete && img.naturalWidth) hasImg();
+          else img.addEventListener("load", hasImg);
+        }
+
+        /* ---- Orbit system ---- */
+        var stage = $(".zyrez-hero-stage"),
+          visual = $(".zyrez-hero-visual"),
+          giant = $(".zyrez-hero-giant");
+        var reduce = window.matchMedia(
+          "(prefers-reduced-motion: reduce)",
+        ).matches;
+        var fine = window.matchMedia(
+          "(hover:hover) and (pointer:fine)",
+        ).matches;
+        var cards = [].slice
+          .call(root.querySelectorAll(".zyrez-hero-card"))
+          .map(function (el) {
+            var d = el.dataset;
+            return {
+              el: el,
+              rx: +d.rx || 0.4,
+              ry: +d.ry || 0.25,
+              sp: +d.speed || 8,
+              ph: +d.phase || 0,
+              dp: +d.depth || 0.5,
+              fl: +d.float || 8,
+              rt: +d.rot || 4,
+              min: +d.min || 0,
+              w: 0,
+              on: true,
+            };
+          });
+        var W = 0,
+          H = 0,
+          VW = 0,
+          T = 0,
+          last = 0,
+          mx = 0,
+          my = 0,
+          tx = 0,
+          ty = 0,
+          run = false,
+          vis = true;
+
+        function measure() {
+          var r = stage.getBoundingClientRect();
+          W = r.width;
+          H = r.height;
+          VW = document.documentElement.clientWidth;
+          cards.forEach(function (c) {
+            c.on = VW >= c.min;
+            c.el.style.display = c.on ? "" : "none";
+            c.w = c.on ? c.el.offsetWidth : 0;
+          });
+        }
+        function frame(now) {
+          var dt = last ? (now - last) / 1000 : 0;
+          last = now;
+          T += Math.min(dt, 0.05);
+          mx += (tx - mx) * 0.06;
+          my += (ty - my) * 0.06;
+          cards.forEach(function (c) {
+            if (!c.on) return;
+            var a = ((c.ph + T * c.sp * CONFIG.orbitSpeed) * Math.PI) / 180,
+              s = Math.sin(a),
+              co = Math.cos(a);
+            var half = Math.max(40, VW / 2 - c.w / 2 - 10); // keep cards inside the screen
+            var x = co * Math.min(c.rx * W, half);
+            var y =
+              s * c.ry * H +
+              Math.sin(T * 0.9 + c.ph) * c.fl * CONFIG.floatAmount;
+            var k = fine ? CONFIG.mouseStrength * c.dp * 22 : 0;
+            var rot = Math.sin(T * 0.6 + c.ph) * c.rt + co * 3;
+            c.el.style.transform =
+              "translate3d(" +
+              (x + mx * k) +
+              "px," +
+              (y + my * k) +
+              "px,0) translate(-50%,-50%) rotate(" +
+              rot +
+              "deg) scale(" +
+              (1 + s * 0.1) +
+              ")";
+            c.el.style.zIndex = s > 0 ? 5 : 2; // top half passes behind the person
+          });
+          if (fine && CONFIG.mouseStrength) {
+            visual.style.transform =
+              "translate3d(" + -mx * 10 + "px," + -my * 6 + "px,0)";
+            giant.style.transform = "translate3d(" + mx * 14 + "px,0,0)";
+          }
+          if (run) requestAnimationFrame(frame);
+        }
+        function loop() {
+          var should = vis && !document.hidden && !reduce;
+          if (should && !run) {
+            run = true;
+            last = 0;
+            requestAnimationFrame(frame);
+          } else if (!should) run = false;
+        }
+        if (fine && CONFIG.mouseStrength) {
+          root.addEventListener("mousemove", function (e) {
+            tx = (e.clientX / VW - 0.5) * 2;
+            ty = (e.clientY / window.innerHeight - 0.5) * 2;
+          });
+          root.addEventListener("mouseleave", function () {
+            tx = 0;
+            ty = 0;
+          });
+        }
+        if ("IntersectionObserver" in window) {
+          new IntersectionObserver(function (en) {
+            vis = en[0].isIntersecting;
+            loop();
+          }).observe(root);
+        }
+        document.addEventListener("visibilitychange", loop);
+        window.addEventListener("resize", function () {
+          bleed();
+          measure();
+          if (!run) frame(performance.now());
+        });
+
+        /* ---- Start (after the preloader begins leaving, if present) ---- */
+        function start() {
+          bleed();
+          measure();
+          root.classList.add("zyrez-hero-ready");
+          frame(performance.now()); // draw first frame (also covers reduced-motion)
+          loop();
+        }
+        function begin() {
+          if (!CONFIG.waitForPreloader) return start();
+          var n = 0,
+            i = setInterval(function () {
+              var p = document.getElementById("zyrez-preloader");
+              if (
+                !p ||
+                /zp-leaving|zyrez-hide/.test(p.className) ||
+                ++n > 150
+              ) {
+                clearInterval(i);
+                setTimeout(start, 300);
+              }
+            }, 100);
+        }
+        bleed();
+        if (document.readyState === "complete") begin();
+        else window.addEventListener("load", begin);
+        setTimeout(function () {
+          if (!root.classList.contains("zyrez-hero-ready")) start();
+        }, 16000); // failsafe
+      })();
+    </script>
+  </body>
+</html>
