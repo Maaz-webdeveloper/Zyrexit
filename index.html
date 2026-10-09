@@ -97,27 +97,29 @@
         height: 60px;
         width: auto;
       }
-      .zyrez-nav-btn {
+  .zyrez-nav-btn {
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 5px;
         padding: 6px 6px 6px 18px;
         border-radius: 999px;
-        border: 1px solid rgba(255, 204, 0, 0.55);
-        background: rgba(10, 10, 10, 0.7);
+        border: none; /* Purana border hata diya hai */
+        background-image: url('https://assets.cdn.filesafe.space/bGYkTtwdgUDkTHqNb1v2/media/6ac7ae4636f417f10ecfa593.svg'); /* Apna wala SVG link yahan daal dein */
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-color: transparent;
+        color: #f6f1f1; /* Text color black ya apni pasand ka rakh lein */
         font-size: 12px;
         font-weight: 700;
         letter-spacing: 0.14em;
         line-height: 1;
-        transition:
-          border-color 0.3s,
-          box-shadow 0.3s,
-          background 0.3s;
+        transition: transform 0.3s, box-shadow 0.3s, opacity 0.3s;
       }
       .zyrez-nav-btn:hover {
-        border-color: var(--zyrez-gold);
+        opacity: 0.9;
         box-shadow: 0 0 24px rgba(255, 204, 0, 0.28);
-        background: rgba(255, 204, 0, 0.08);
+        transform: translateY(-2px);
       }
       .zyrez-nav-label {
         display: block;
@@ -369,15 +371,21 @@
         transform: translateY(-2px);
         box-shadow: 0 10px 30px rgba(255, 204, 0, 0.35);
       }
-      .zyrez-hero-btn--ghost {
+    .zyrez-hero-btn--ghost {
         height: 44px;
         padding: 0 24px;
-        border: 1px solid rgba(255, 204, 0, 0.5);
-        background: rgba(0, 0, 0, 0.4);
+        border: none; /* Purana border khatam kar diya hai */
+        background-image: url('https://assets.cdn.filesafe.space/bGYkTtwdgUDkTHqNb1v2/media/6ac7ae458c077584b4fa0456.svg'); /* Apna link yahan paste kar dein */
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        color: #f9f3f3; /* Text ka color black ya apni pasand ka rakh lein */
+        font-weight: 700;
       }
       .zyrez-hero-btn--ghost:hover {
-        background: rgba(255, 204, 0, 0.12);
-        border-color: var(--zyrez-gold);
+        opacity: 0.9;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 20px rgba(255, 204, 0, 0.3);
       }
       .zyrez-hero-btn-arrow {
         display: grid;
