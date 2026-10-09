@@ -225,20 +225,18 @@
           transform 0.9s var(--zyrez-ease);
         transition-delay: calc(0.3s + var(--i) * 0.07s);
       }
-      .zyrez-menu-link {
-        display: flex;
-        align-items: baseline;
-        gap: 18px;
-        padding: 0.1em 0;
-        font-size: clamp(2rem, 7vw, 4.8rem);
-        font-weight: 800;
-        line-height: 1.1;
-        text-transform: uppercase;
-        color: rgba(255, 255, 255, 0.85);
-        transition:
-          color 0.3s,
-          padding 0.3s;
-      }
+     .zyrez-menu-link {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  padding: 0.05em 0; /* Padding thodi kam ki hai taaki height manage rahe */
+  font-size: clamp(1.5rem, 4.5vw, 3.2rem); /* Font size pehle se chhota kar diya hai */
+  font-weight: 800;
+  line-height: 1.1;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+  transition: color 0.3s, padding 0.3s;
+}
       .zyrez-menu-link small {
         font-size: 0.8rem;
         letter-spacing: 0.2em;
@@ -870,25 +868,27 @@
       (function () {
         "use strict";
 
-        /* ===== CONFIG (easy settings) ===== */
+    /* ===== CONFIG (easy settings) ===== */
         var CONFIG = {
-          waitForPreloader: true, // start hero animation when the ZYREZ preloader begins its exit
-          fullBleed: true, // stretch edge-to-edge even inside a GHL column
-          fixedNav: false, // true = navbar stays on screen while scrolling
-          lockScroll: true, // lock page scroll while the menu is open
-          orbitSpeed: 1, // 0.5 = slower, 2 = faster (all cards)
-          floatAmount: 1, // up/down floating strength
-          mouseStrength: 1, // desktop mouse parallax (0 = off)
+          waitForPreloader: true, 
+          fullBleed: true, 
+          fixedNav: false, 
+          lockScroll: true, 
+          orbitSpeed: 1, 
+          floatAmount: 1, 
+          mouseStrength: 1, 
           /* MENU ITEMS: replace with your real GHL page links */
           menuItems: [
             { label: "Home", href: "#" },
             { label: "Services", href: "#services" },
             { label: "Work", href: "#work" },
+            { label: "Portfolio", href: "#portfolio" },
+            { label: "Blog", href: "#blog" },
+            { label: "Career", href: "#career" },
             { label: "About", href: "#about" },
             { label: "Contact", href: "#contact" },
           ],
         };
-
         var root = document.getElementById("zyrez-hero-root");
         if (!root) return;
         var $ = function (s) {
