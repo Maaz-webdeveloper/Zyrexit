@@ -643,6 +643,35 @@
           height: 32px;
         }
       }
+      /* ===== Mobile Responsive Fix for Giant SVG & Stage ===== */
+
+@media (max-width: 768px) {
+
+/* Mobile par background SVG ka size aur visibility set karne ke liye */
+
+.zyrez-hero-giant {
+
+height: 45vw !important; /* Mobile par height thodi barhi ho jayegi taaki chota na lage */
+
+max-height: 220px;
+
+opacity: 0.15; /* Mobile par thoda halka rakhein taaki text saaf parha jaye */
+
+bottom: 0;
+
+}
+
+
+
+/* Hero stage ka size bhi mobile ke mutabiq adjust kar lein */
+
+.zyrez-hero-root {
+
+--zyrez-stage-h: clamp(280px, 75vw, 380px);
+
+}
+
+}
     </style>
 
     <div class="zyrez-hero-root" id="zyrez-hero-root">
