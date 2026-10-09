@@ -403,29 +403,29 @@
         margin-top: auto;
         padding-top: 10px;
       }
- .zyrez-hero-giant {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -0.08em;
-  z-index: 1;
-  text-align: center;
-  pointer-events: none;
-  user-select: none;
-  width: 100%;
-  height: 25vw;
-  max-height: 400px;
-  
-  background-image: url('https://assets.cdn.filesafe.space/bGYkTtwdgUDkTHqNb1v2/media/6ac7ae460762cee3015e829e.svg');
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  
-  /* Vibe aur Screen match karne ke liye best values */
-  opacity: 0.18; /* Thoda transparent rakha hai taaki text dab na jaye */
-  /* filter: brightness(1.1) contrast(1.2) drop-shadow(0 0 15px rgba(255, 204, 0, 0.15)); */
-  will-change: transform;
-}
+      .zyrez-hero-giant {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -0.08em;
+        z-index: 1;
+        text-align: center;
+        pointer-events: none;
+        user-select: none;
+        width: 100%;
+        height: 25vw;
+        max-height: 400px;
+
+        background-image: url("https://assets.cdn.filesafe.space/bGYkTtwdgUDkTHqNb1v2/media/6ac7ae460762cee3015e829e.svg");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+
+        /* Vibe aur Screen match karne ke liye best values */
+        opacity: 0.18; /* Thoda transparent rakha hai taaki text dab na jaye */
+        /* filter: brightness(1.1) contrast(1.2) drop-shadow(0 0 15px rgba(255, 204, 0, 0.15)); */
+        will-change: transform;
+      }
       .zyrez-hero-ring {
         position: absolute;
         left: 50%;
@@ -587,59 +587,59 @@
       .zyrez-hero-ready .zyrez-hero-giant {
         opacity: 1;
       }
-/* 1. Upar wale text ke liye: Left to Right movement (Slow & Smooth) */
-@keyframes zyrez-shine-left-to-right {
-  0% {
-    background-position: 0% 50%;
-  }
-  100% {
-    background-position: 200% 50%;
-  }
-}
+      /* 1. Upar wale text ke liye: Left to Right movement (Slow & Smooth) */
+      @keyframes zyrez-shine-left-to-right {
+        0% {
+          background-position: 0% 50%;
+        }
+        100% {
+          background-position: 200% 50%;
+        }
+      }
 
-/* 2. Neeche wale span ke liye: Right to Left movement (Slow & Smooth) */
-@keyframes zyrez-shine-right-to-left {
-  0% {
-    background-position: 200% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
+      /* 2. Neeche wale span ke liye: Right to Left movement (Slow & Smooth) */
+      @keyframes zyrez-shine-right-to-left {
+        0% {
+          background-position: 200% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
 
-/* Upar wali heading: Powering businesses with (Left to Right) */
-.zyrez-animated-gradient-title {
-  background: linear-gradient(
-    90deg, 
-    #ffffff 0%, 
-    #ffcc00 25%, 
-    #ffdd65 50%, 
-    #ffcc00 75%, 
-    #ffffff 100%
-  );
-  background-size: 250% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: zyrez-shine-left-to-right 10s linear infinite;
-}
+      /* Upar wali heading: Powering businesses with (Left to Right) */
+      .zyrez-animated-gradient-title {
+        background: linear-gradient(
+          90deg,
+          #ffffff 0%,
+          #ffcc00 25%,
+          #ffdd65 50%,
+          #ffcc00 75%,
+          #ffffff 100%
+        );
+        background-size: 250% auto;
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: zyrez-shine-left-to-right 10s linear infinite;
+      }
 
-/* Neeche wala span: smarter digital solutions (Right to Left) */
-.zyrez-hero-accent {
-  background: linear-gradient(
-    90deg, 
-    #ffcc00 0%, 
-    #ffffff 25%, 
-    #ffdd65 50%, 
-    #ffffff 75%, 
-    #ffcc00 100%
-  );
-  background-size: 250% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: zyrez-shine-right-to-left 10s linear infinite;
-}
+      /* Neeche wala span: smarter digital solutions (Right to Left) */
+      .zyrez-hero-accent {
+        background: linear-gradient(
+          90deg,
+          #ffcc00 0%,
+          #ffffff 25%,
+          #ffdd65 50%,
+          #ffffff 75%,
+          #ffcc00 100%
+        );
+        background-size: 250% auto;
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: zyrez-shine-right-to-left 10s linear infinite;
+      }
       /* ===== 7. RESPONSIVE ===== */
       @media (min-width: 900px) {
         .zyrez-hero-stage {
@@ -697,33 +697,25 @@
       }
       /* ===== Mobile Responsive Fix for Giant SVG & Stage ===== */
 
-@media (max-width: 768px) {
+      @media (max-width: 768px) {
+        /* Mobile par background SVG ka size aur visibility set karne ke liye */
 
-/* Mobile par background SVG ka size aur visibility set karne ke liye */
+        .zyrez-hero-giant {
+          height: 45vw !important; /* Mobile par height thodi barhi ho jayegi taaki chota na lage */
 
-.zyrez-hero-giant {
+          max-height: 220px;
 
-height: 45vw !important; /* Mobile par height thodi barhi ho jayegi taaki chota na lage */
+          opacity: 0.15; /* Mobile par thoda halka rakhein taaki text saaf parha jaye */
 
-max-height: 220px;
+          bottom: 0;
+        }
 
-opacity: 0.15; /* Mobile par thoda halka rakhein taaki text saaf parha jaye */
+        /* Hero stage ka size bhi mobile ke mutabiq adjust kar lein */
 
-bottom: 0;
-
-}
-
-
-
-/* Hero stage ka size bhi mobile ke mutabiq adjust kar lein */
-
-.zyrez-hero-root {
-
---zyrez-stage-h: clamp(280px, 75vw, 380px);
-
-}
-
-}
+        .zyrez-hero-root {
+          --zyrez-stage-h: clamp(280px, 75vw, 380px);
+        }
+      }
     </style>
 
     <div class="zyrez-hero-root" id="zyrez-hero-root">
@@ -786,10 +778,13 @@ bottom: 0;
           <div class="zyrez-hero-eyebrow zyrez-hero-in" style="--d: 0">
             Marketing Agency
           </div>
-     <h1 class="zyrez-hero-title zyrez-hero-in zyrez-animated-gradient-title" style="--d: 0.1">
-  Powering businesses with
-  <span class="zyrez-hero-accent">smarter digital solutions</span>
-</h1>
+          <h1
+            class="zyrez-hero-title zyrez-hero-in zyrez-animated-gradient-title"
+            style="--d: 0.1"
+          >
+            Powering businesses with
+            <span class="zyrez-hero-accent">smarter digital solutions</span>
+          </h1>
           <p class="zyrez-hero-text zyrez-hero-in" style="--d: 0.2">
             We build the digital systems, experiences, and strategies that help
             modern businesses look better, work smarter, and scale with
