@@ -34,7 +34,11 @@
         --zyrez-card-w: 184px; /* floating card width */
         --zyrez-card-blur: 10px; /* glass blur (0px = faster on weak phones) */
         --zyrez-orbit-cy: 56%; /* vertical center of the orbit inside the visual area */
-       --zyrez-stage-h: clamp(260px, 38vw, 480px);/* height of the hero image area */
+        --zyrez-stage-h: clamp(
+          260px,
+          38vw,
+          480px
+        ); /* height of the hero image area */
         --zyrez-ease: cubic-bezier(0.76, 0, 0.24, 1);
         position: relative;
         display: block;
@@ -221,18 +225,24 @@
           transform 0.9s var(--zyrez-ease);
         transition-delay: calc(0.3s + var(--i) * 0.07s);
       }
-     .zyrez-menu-link {
-  display: flex;
-  align-items: baseline;
-  gap: 18px;
-  padding: 0.05em 0; /* Padding thodi kam ki hai taaki height manage rahe */
-  font-size: clamp(1.5rem, 4.5vw, 3.2rem); /* Font size pehle se chhota kar diya hai */
-  font-weight: 800;
-  line-height: 1.1;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.85);
-  transition: color 0.3s, padding 0.3s;
-}
+      .zyrez-menu-link {
+        display: flex;
+        align-items: baseline;
+        gap: 18px;
+        padding: 0.05em 0; /* Padding thodi kam ki hai taaki height manage rahe */
+        font-size: clamp(
+          1.5rem,
+          4.5vw,
+          3.2rem
+        ); /* Font size pehle se chhota kar diya hai */
+        font-weight: 800;
+        line-height: 1.1;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.85);
+        transition:
+          color 0.3s,
+          padding 0.3s;
+      }
       .zyrez-menu-link small {
         font-size: 0.8rem;
         letter-spacing: 0.2em;
@@ -256,18 +266,24 @@
       }
 
       /* ===== 4. HERO LAYOUT ===== */
-   .zyrez-hero {
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  height: 100vh; /* min-height ki jagah height: 100vh kar dein taaki scroll na aaye */
-  height: 100svh;
-  padding: clamp(80px, 10vh, 110px) 20px 0; /* Padding thodi kam ki hai */
-  background: radial-gradient(ellipse 60% 40% at 50% 72%, rgba(255, 204, 0, 0.12), transparent 70%), linear-gradient(#0b0b0b, #000 60%);
-}
+      .zyrez-hero {
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        height: 100vh; /* min-height ki jagah height: 100vh kar dein taaki scroll na aaye */
+        height: 100svh;
+        padding: clamp(80px, 10vh, 110px) 20px 0; /* Padding thodi kam ki hai */
+        background:
+          radial-gradient(
+            ellipse 60% 40% at 50% 72%,
+            rgba(255, 204, 0, 0.12),
+            transparent 70%
+          ),
+          linear-gradient(#0b0b0b, #000 60%);
+      }
       .zyrez-hero-copy {
         position: relative;
         z-index: 6;
@@ -387,29 +403,29 @@
         margin-top: auto;
         padding-top: 10px;
       }
-      .zyrez-hero-giant {
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: -0.08em;
-        z-index: 1;
-        text-align: center;
-        white-space: nowrap;
-        pointer-events: none;
-        user-select: none;
-        font-size: clamp(5rem, 23vw, 22rem);
-        font-weight: 900;
-        line-height: 0.8;
-        letter-spacing: -0.02em;
-        background: linear-gradient(
-          180deg,
-          rgba(255, 255, 255, 0.16),
-          rgba(255, 255, 255, 0.02)
-        );
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
+ .zyrez-hero-giant {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.08em;
+  z-index: 1;
+  text-align: center;
+  pointer-events: none;
+  user-select: none;
+  width: 100%;
+  height: 25vw;
+  max-height: 400px;
+  
+  background-image: url('https://assets.cdn.filesafe.space/bGYkTtwdgUDkTHqNb1v2/media/6ac7ae460762cee3015e829e.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  
+  /* Vibe aur Screen match karne ke liye best values */
+  opacity: 0.18; /* Thoda transparent rakha hai taaki text dab na jaye */
+  filter: brightness(1.1) contrast(1.2) drop-shadow(0 0 15px rgba(255, 204, 0, 0.15)); /* Halkaa sa golden glow */
+  will-change: transform;
+}
       .zyrez-hero-ring {
         position: absolute;
         left: 50%;
@@ -662,9 +678,24 @@
         <ul class="zyrez-menu-list"></ul>
         <div class="zyrez-menu-foot">
           <!-- REPLACE contact / social links -->
-          <a href="mailto:hello@zyrexit.com" target="_blank" rel="noopener noreferrer">hello@zyrexit.com</a>
-          <a href="https://www.instagram.com/zyrexit" target="_blank" rel="noopener noreferrer">Instagram</a>
-          <a href="https://www.linkedin.com/company/zyrex-it" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <a
+            href="mailto:hello@zyrexit.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            >hello@zyrexit.com</a
+          >
+          <a
+            href="https://www.instagram.com/zyrexit"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Instagram</a
+          >
+          <a
+            href="https://www.linkedin.com/company/zyrex-it"
+            target="_blank"
+            rel="noopener noreferrer"
+            >LinkedIn</a
+          >
         </div>
       </nav>
 
@@ -708,7 +739,12 @@
           >
         </div>
         <div class="zyrez-hero-stage">
-          <span class="zyrez-hero-giant" aria-hidden="true">ZYREZ IT</span>
+          <span
+            class="zyrez-hero-giant"
+            src="https://assets.cdn.filesafe.space/bGYkTtwdgUDkTHqNb1v2/media/6ac7ae460762cee3015e829e.svg"
+            alt=""
+            aria-hidden="true"
+          />
           <span class="zyrez-hero-ring" aria-hidden="true"></span>
 
           <div class="zyrez-hero-visual">
@@ -858,15 +894,15 @@
       (function () {
         "use strict";
 
-    /* ===== CONFIG (easy settings) ===== */
+        /* ===== CONFIG (easy settings) ===== */
         var CONFIG = {
-          waitForPreloader: true, 
-          fullBleed: true, 
-          fixedNav: false, 
-          lockScroll: true, 
-          orbitSpeed: 1, 
-          floatAmount: 1, 
-          mouseStrength: 1, 
+          waitForPreloader: true,
+          fullBleed: true,
+          fixedNav: false,
+          lockScroll: true,
+          orbitSpeed: 1,
+          floatAmount: 1,
+          mouseStrength: 1,
           /* MENU ITEMS: replace with your real GHL page links */
           menuItems: [
             { label: "Home", href: "#" },
