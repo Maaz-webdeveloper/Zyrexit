@@ -587,7 +587,8 @@
       .zyrez-hero-ready .zyrez-hero-giant {
         opacity: 1;
       }
-@keyframes zyrez-shine-flow {
+/* 1. Upar wale text ke liye: Left to Right movement (Slow & Smooth) */
+@keyframes zyrez-shine-left-to-right {
   0% {
     background-position: 0% 50%;
   }
@@ -596,37 +597,48 @@
   }
 }
 
+/* 2. Neeche wale span ke liye: Right to Left movement (Slow & Smooth) */
+@keyframes zyrez-shine-right-to-left {
+  0% {
+    background-position: 200% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Upar wali heading: Powering businesses with (Left to Right) */
 .zyrez-animated-gradient-title {
-  /* Yahan humne white aur gold ka aisa combination banaya hai jo words ke darmiyan mix hota hua chale ga */
   background: linear-gradient(
     90deg, 
     #ffffff 0%, 
     #ffcc00 25%, 
-    #ffffff 50%, 
+    #ffdd65 50%, 
     #ffcc00 75%, 
     #ffffff 100%
   );
-  background-size: 200% auto;
+  background-size: 250% auto;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: zyrez-shine-flow 5s linear infinite;
+  animation: zyrez-shine-left-to-right 10s linear infinite;
 }
 
-/* Agar span tag (Smarter Digital Solutions) ke andar bhi alag se gradient chalana ho */
+/* Neeche wala span: smarter digital solutions (Right to Left) */
 .zyrez-hero-accent {
   background: linear-gradient(
     90deg, 
     #ffcc00 0%, 
-    #ffffff 30%, 
-    #ffcc00 60%, 
-    #ffffff 100%
+    #ffffff 25%, 
+    #ffdd65 50%, 
+    #ffffff 75%, 
+    #ffcc00 100%
   );
-  background-size: 200% auto;
+  background-size: 250% auto;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: zyrez-shine-flow 6s linear infinite reverse; /* Uski movement opposite direction mein hogi taaki aur professional lage */
+  animation: zyrez-shine-right-to-left 10s linear infinite;
 }
       /* ===== 7. RESPONSIVE ===== */
       @media (min-width: 900px) {
