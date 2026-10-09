@@ -11,6 +11,64 @@
      ZYREZ IT | Navbar + Cinematic Hero  (paste into ONE GHL Custom HTML block)
      Scoped: .zyrez-hero-root / .zyrez-hero-* / .zyrez-nav-* / .zyrez-menu-*
      ═══════════════════════════════════════════════════════════════ -->
+     <!-- CURSOR BALL SCRIPT -->
+    <style>
+      @media (hover: hover) and (pointer: fine) {
+        body { cursor: default; }
+        .zyrez-cursor-ball {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 24px;
+          height: 24px;
+          background: radial-gradient(circle, rgba(255,204,0,0.85) 0%, rgba(255,204,0,0.2) 70%, transparent 100%);
+          border: 1.5px solid rgba(255, 204, 0, 0.6);
+          border-radius: 50%;
+          pointer-events: none;
+          z-index: 999999;
+          transform: translate(-50%, -50%);
+          transition: width 0.3s ease, height 0.3s ease, background 0.3s ease;
+          box-shadow: 0 0 15px rgba(255, 204, 0, 0.4);
+          will-change: transform;
+        }
+        body:has(a:hover, button:hover) .zyrez-cursor-ball {
+          width: 45px;
+          height: 45px;
+          background: radial-gradient(circle, rgba(255,204,0,0.4) 0%, rgba(255,204,0,0.1) 70%, transparent 100%);
+          border-color: rgba(255, 204, 0, 0.9);
+        }
+      }
+    </style>
+    <div class="zyrez-cursor-ball" id="zyrezCursorBall"></div>
+    <script>
+      (function () {
+        if (window.matchMedia("(pointer: coarse)").matches) return;
+        const ball = document.getElementById("zyrezCursorBall");
+        if (!ball) return;
+        let mouseX = window.innerWidth / 2;
+        let mouseY = window.innerHeight / 2;
+        let ballX = mouseX;
+        let ballY = mouseY;
+        let time = 0;
+        window.addEventListener("mousemove", (e) => {
+          mouseX = e.clientX;
+          mouseY = e.clientY;
+        });
+        function animate() {
+          let distX = mouseX - ballX;
+          let distY = mouseY - ballY;
+          ballX += distX * 0.15;
+          ballY += distY * 0.15;
+          time += 0.05;
+          let pulse = Math.sin(time) * 3;
+          ball.style.transform = `translate3d(${ballX}px, ${ballY}px, 0) translate(-50%, -50%) scale(${1 + pulse * 0.02})`;
+          requestAnimationFrame(animate);
+        }
+        animate();
+      })();
+    </script>
+  </body>
+</html>
     <style>
       * {
         margin: 0;
