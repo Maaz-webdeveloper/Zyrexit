@@ -587,7 +587,47 @@
       .zyrez-hero-ready .zyrez-hero-giant {
         opacity: 1;
       }
+@keyframes zyrez-shine-flow {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
 
+.zyrez-animated-gradient-title {
+  /* Yahan humne white aur gold ka aisa combination banaya hai jo words ke darmiyan mix hota hua chale ga */
+  background: linear-gradient(
+    90deg, 
+    #ffffff 0%, 
+    #ffcc00 25%, 
+    #ffffff 50%, 
+    #ffcc00 75%, 
+    #ffffff 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: zyrez-shine-flow 5s linear infinite;
+}
+
+/* Agar span tag (Smarter Digital Solutions) ke andar bhi alag se gradient chalana ho */
+.zyrez-hero-accent {
+  background: linear-gradient(
+    90deg, 
+    #ffcc00 0%, 
+    #ffffff 30%, 
+    #ffcc00 60%, 
+    #ffffff 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: zyrez-shine-flow 6s linear infinite reverse; /* Uski movement opposite direction mein hogi taaki aur professional lage */
+}
       /* ===== 7. RESPONSIVE ===== */
       @media (min-width: 900px) {
         .zyrez-hero-stage {
@@ -734,10 +774,10 @@ bottom: 0;
           <div class="zyrez-hero-eyebrow zyrez-hero-in" style="--d: 0">
             Marketing Agency
           </div>
-          <h1 class="zyrez-hero-title zyrez-hero-in" style="--d: 0.1">
-            Powering businesses with
-            <span class="zyrez-hero-accent">smarter digital solutions</span>
-          </h1>
+     <h1 class="zyrez-hero-title zyrez-hero-in zyrez-animated-gradient-title" style="--d: 0.1">
+  Powering businesses with
+  <span class="zyrez-hero-accent">smarter digital solutions</span>
+</h1>
           <p class="zyrez-hero-text zyrez-hero-in" style="--d: 0.2">
             We build the digital systems, experiences, and strategies that help
             modern businesses look better, work smarter, and scale with
@@ -793,7 +833,7 @@ bottom: 0;
            data-min          : show only when screen width >= this (0 = also on mobile) -->
           <div class="zyrez-hero-orbit">
             <!-- FLOATING CARD 0-->
-            //add krna ha 3d card
+            <!-- //add krna ha 3d card -->
           </div>
         </div>
       </section>
