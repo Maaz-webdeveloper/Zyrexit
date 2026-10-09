@@ -97,23 +97,30 @@
         height: 41px;
         width: auto;
       }
-      .zyrez-nav-btn {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        padding: 6px 6px 6px 18px;
-        border-radius: 999px;
-        border: 1px solid rgba(255, 204, 0, 0.55);
-        background: rgba(10, 10, 10, 0.7);
-        font-size: 12px;
-        font-weight: 700;
-        letter-spacing: 0.14em;
-        line-height: 1;
-        transition:
-          border-color 0.3s,
-          box-shadow 0.3s,
-          background 0.3s;
-      }
+     .zyrez-nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 6px 6px 18px;
+  border-radius: 999px;
+  
+  /* Yahan border ko transparent karke background-image se gradient border banaya hai */
+  border: 2px solid transparent;
+  background: linear-gradient(rgba(10, 10, 10, 0.7), rgba(10, 10, 10, 0.7)) padding-box,
+              linear-gradient(135deg, #ffdd65, #ffcc00) border-box;
+  
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1;
+  transition: box-shadow 0.3s, background 0.3s;
+}
+
+.zyrez-nav-btn:hover {
+  box-shadow: 0 0 24px rgba(255, 204, 0, 0.35);
+  background: linear-gradient(rgba(255, 204, 0, 0.08), rgba(255, 204, 0, 0.08)) padding-box,
+              linear-gradient(135deg, #ffdd65, #ffcc00) border-box;
+}
       .zyrez-nav-btn:hover {
         border-color: var(--zyrez-gold);
         box-shadow: 0 0 24px rgba(255, 204, 0, 0.28);
@@ -647,7 +654,7 @@
         <a class="zyrez-nav-logo" href="/">
           <!-- REPLACE LOGO HERE (image URL, or paste your own <svg>) -->
           <img
-            src="https://assets.cdn.filesafe.space/bGYkTtwdgUDkTHqNb1v2/media/6ac7a7d0195f9172edefec8e.png"
+            src="https://assets.cdn.filesafe.space/bGYkTtwdgUDkTHqNb1v2/media/6ac083557d735ea2a1ec64a7.png"
             alt="ZYREZ IT"
           />
         </a>
