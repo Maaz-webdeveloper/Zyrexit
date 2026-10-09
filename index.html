@@ -34,11 +34,7 @@
         --zyrez-card-w: 184px; /* floating card width */
         --zyrez-card-blur: 10px; /* glass blur (0px = faster on weak phones) */
         --zyrez-orbit-cy: 56%; /* vertical center of the orbit inside the visual area */
-        --zyrez-stage-h: clamp(
-          300px,
-          46vw,
-          600px
-        ); /* height of the hero image area */
+       --zyrez-stage-h: clamp(260px, 38vw, 480px);/* height of the hero image area */
         --zyrez-ease: cubic-bezier(0.76, 0, 0.24, 1);
         position: relative;
         display: block;
@@ -260,24 +256,18 @@
       }
 
       /* ===== 4. HERO LAYOUT ===== */
-      .zyrez-hero {
-        position: relative;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        min-height: 100vh;
-        min-height: 100svh;
-        padding: clamp(96px, 13vh, 140px) 20px 0;
-        background:
-          radial-gradient(
-            ellipse 60% 40% at 50% 72%,
-            rgba(255, 204, 0, 0.12),
-            transparent 70%
-          ),
-          linear-gradient(#0b0b0b, #000 60%);
-      }
+   .zyrez-hero {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  height: 100vh; /* min-height ki jagah height: 100vh kar dein taaki scroll na aaye */
+  height: 100svh;
+  padding: clamp(80px, 10vh, 110px) 20px 0; /* Padding thodi kam ki hai */
+  background: radial-gradient(ellipse 60% 40% at 50% 72%, rgba(255, 204, 0, 0.12), transparent 70%), linear-gradient(#0b0b0b, #000 60%);
+}
       .zyrez-hero-copy {
         position: relative;
         z-index: 6;
