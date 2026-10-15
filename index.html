@@ -754,8 +754,12 @@
           --zyrez-stage-h: clamp(280px, 75vw, 380px);
         }
       }
-      @media (min-width: 900px) {
-  .zyrez-hero-visual { bottom: 40px; }   /* picture buttons ke oopar baithegi, poori dikhegi */
+   @media (min-width: 900px) {
+  .zyrez-hero-root {
+    /* stage 60px bara hota hai taake picture 470px ki hi rahe, lekin screen ki height se zyada na ho */
+    --zyrez-stage-h: max(360px, min(calc(clamp(470px, min(44vw, 62vh), 900px) + 60px), calc(100svh - 300px)));
+  }
+  .zyrez-hero-visual { bottom: 60px; }   /* picture buttons ke oopar baithegi */
 }
     </style>
 
