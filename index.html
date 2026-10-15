@@ -70,17 +70,7 @@
   </body>
 </html>
     <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      html,
-      body {
-        width: 100%;
-        height: 100%;
-      }
+   body{margin:0}
       /* ===== 1. CONFIG: colors, sizes, orbit look (change values here) ===== */
       .zyrez-hero-root {
         --zyrez-bg: #000;
@@ -92,11 +82,7 @@
         --zyrez-card-w: 184px; /* floating card width */
         --zyrez-card-blur: 10px; /* glass blur (0px = faster on weak phones) */
         --zyrez-orbit-cy: 56%; /* vertical center of the orbit inside the visual area */
-        --zyrez-stage-h: clamp(
-          260px,
-          38vw,
-          480px
-        ); /* height of the hero image area */
+        --zyrez-stage-h: clamp(260px, min(38vw, 62vh), 900px); /* height of the hero image area */
         --zyrez-ease: cubic-bezier(0.76, 0, 0.24, 1);
         position: relative;
         display: block;
@@ -469,25 +455,23 @@
         margin-top: auto;
         padding-top: 10px;
       }
-      .zyrez-hero-giant {
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: -20%; /* Isse aap background text ko aaram se upar ya neeche set kar sakte hain */
-        z-index: 2;
-        text-align: center;
-        pointer-events: none;
-        user-select: none;
-        width: 100%;
-        height: 55vw; /* Barha kar apne mutabiq set kar lein */
-        max-height: 550px;
-        background-image: url("https://assets.cdn.filesafe.space/bGYkTtwdgUDkTHqNb1v2/media/6ac7ae460762cee3015e829e.svg");
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
-        background-position: center;
-        opacity: 0.18;
-        will-change: transform;
-      }
+.zyrez-hero-giant {
+  position: absolute;
+  left: -20px;   /* 20px extra both sides so mouse parallax never shows a gap */
+  right: -20px;
+  bottom: 0;
+  z-index: 2;
+  pointer-events: none;
+  user-select: none;
+  will-change: transform;
+  opacity: 0.18;
+}
+.zyrez-hero-giant img {
+  display: block;
+  width: 100%;
+  height: auto;                   /* keeps the real ratio, never stretched */
+    transform: translateY(27%);    /* how much hides below the screen edge: 0% = show all, 50% = half */
+}
       .zyrez-hero-ring {
         position: absolute;
         left: 50%;
@@ -762,15 +746,7 @@
       @media (max-width: 768px) {
         /* Mobile par background SVG ka size aur visibility set karne ke liye */
 
-        .zyrez-hero-giant {
-          height: 45vw !important; /* Mobile par height thodi barhi ho jayegi taaki chota na lage */
 
-          max-height: 220px;
-
-          opacity: 0.15; /* Mobile par thoda halka rakhein taaki text saaf parha jaye */
-
-          bottom: 0;
-        }
 
         /* Hero stage ka size bhi mobile ke mutabiq adjust kar lein */
 
@@ -836,7 +812,13 @@
 
       <!-- ============ HERO ============ -->
       <section class="zyrez-hero">
-        <span class="zyrez-hero-giant" aria-hidden="true"></span>
+       <span class="zyrez-hero-giant" aria-hidden="true">
+  <img
+    src="https://assets.cdn.filesafe.space/bGYkTtwdgUDkTHqNb1v2/media/6ac7ae460762cee3015e829e.svg"
+    alt=""
+    draggable="false"
+  />
+</span>
         <div class="zyrez-hero-copy">
           <div class="zyrez-hero-eyebrow zyrez-hero-in" style="--d: 0">
             Marketing Agency
