@@ -396,54 +396,44 @@ body {
         gap: 14px;
         margin-top: 28px;
       }
-      .zyrez-hero-btn {
+.zyrez-hero-btn {
         display: inline-flex;
         align-items: center;
-        gap: 12px;
         border-radius: 999px;
-        font-size: 12px;
+        font-size: 11px;
         font-weight: 700;
         letter-spacing: 0.12em;
         line-height: 1;
         text-transform: uppercase;
-        transition:
-          transform 0.3s,
-          box-shadow 0.3s,
-          background 0.3s,
-          border-color 0.3s;
+        transition: transform 0.3s, box-shadow 0.3s, background 0.3s, border-color 0.3s;
       }
 /* Book a call button */
       .zyrez-hero-btn--gold {
-        display: inline-flex;
-        align-items: center;
-        justify-content: space-between; /* Text ko left aur icon ko right par fix rakhega */
-        height: 40px;
-        padding: 0 4px 0 22px; /* Left se text ki padding, right se bilkul zero taaki icon bahar na nikle */
+        justify-content: space-between;
+        height: 38px;
+        padding: 0 4px 0 18px;
         background: linear-gradient(135deg, var(--zyrez-gold-light), var(--zyrez-gold));
         color: #000;
         border: none;
-        border-radius: 999px;
-        overflow: hidden; /* Yeh ensure karega ke koi bhi cheez button ki boundary se bahar na jaye */
+        overflow: hidden;
       }
       .zyrez-hero-btn--gold:hover {
         transform: translateY(-2px);
         box-shadow: 0 10px 30px rgba(255, 204, 0, 0.35);
       }
-  /* View services button ko Book a call ke barabar aur center karne ke liye */
+/* View services button */
       .zyrez-hero-btn--ghost {
-        height: 38px; /* Gold button ki height ke barabar kar diya */
-        padding: 0 24px; /* Upar-neeche ki jagah left-right padding set ki */
-        display: inline-flex;
-        align-items: center; /* Text ko vertical center mein laane ke liye */
+        height: 38px;
+        padding: 0 22px;
+        justify-content: center;
         border: none;
         background-image: url('https://assets.cdn.filesafe.space/bGYkTtwdgUDkTHqNb1v2/media/6ac7ae458c077584b4fa0456.svg');
         background-size: 100% 100%;
         background-repeat: no-repeat;
         background-position: center;
         color: #f9f3f3;
-        font-weight: 700;
       }
-      .zyrez-hero-btn--ghost:hover {
+.zyrez-hero-btn--ghost:hover {
         opacity: 0.9;
         transform: translateY(-2px);
         box-shadow: 0 5px 20px rgba(255, 204, 0, 0.3);
@@ -452,18 +442,51 @@ body {
       .zyrez-hero-btn-arrow {
         display: grid;
         place-items: center;
-        width: 32px;
-        height: 32px;
+        width: 30px;
+        height: 30px;
         border-radius: 50%;
         background: #000;
         color: var(--zyrez-gold);
         transition: transform 0.3s ease;
-        margin-left: 12px; /* Text aur icon ke darmiyan proper fasla */
+        margin-left: 10px;
       }
-      .zyrez-hero-btn--gold:hover .zyrez-hero-btn-arrow {
+.zyrez-hero-btn--gold:hover .zyrez-hero-btn-arrow {
         transform: translateX(3px);
       }
+/* ===== MOBILE RESPONSIVE FIX FOR BUTTONS ===== */
+      @media (max-width: 560px) {
+        .zyrez-hero-cta {
+          gap: 12px;
+          padding: 0 16px;
+          flex-direction: row; /* Dono buttons aik line mein hi rahein */
+          justify-content: center;
+        }
 
+        .zyrez-hero-btn--gold {
+          height: 38px;
+          padding: 0 4px 0 16px; /* Mobile par left padding */
+          display: inline-flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+
+        .zyrez-hero-btn--ghost {
+          height: 38px;
+          padding: 0 18px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 10px;
+        }
+
+        .zyrez-hero-btn-arrow {
+          width: 30px;
+          height: 30px;
+          margin-left: 8px;
+          display: grid;
+          place-items: center;
+        }
+      }
       /* ===== 5. VISUAL STAGE: image + orbit ===== */
       .zyrez-hero-stage {
         position: relative;
