@@ -412,28 +412,35 @@ body {
           background 0.3s,
           border-color 0.3s;
       }
+/* Book a call button */
       .zyrez-hero-btn--gold {
-        padding: 6px 6px 6px 22px;
-        background: linear-gradient(
-          135deg,
-          var(--zyrez-gold-light),
-          var(--zyrez-gold)
-        );
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between; /* Text ko left aur icon ko right par fix rakhega */
+        height: 40px;
+        padding: 0 4px 0 22px; /* Left se text ki padding, right se bilkul zero taaki icon bahar na nikle */
+        background: linear-gradient(135deg, var(--zyrez-gold-light), var(--zyrez-gold));
         color: #000;
+        border: none;
+        border-radius: 999px;
+        overflow: hidden; /* Yeh ensure karega ke koi bhi cheez button ki boundary se bahar na jaye */
       }
       .zyrez-hero-btn--gold:hover {
         transform: translateY(-2px);
         box-shadow: 0 10px 30px rgba(255, 204, 0, 0.35);
       }
-    .zyrez-hero-btn--ghost {
-        height: 44px;
-        padding: 0 24px;
-        border: none; /* Purana border khatam kar diya hai */
-        background-image: url('https://assets.cdn.filesafe.space/bGYkTtwdgUDkTHqNb1v2/media/6ac7ae458c077584b4fa0456.svg'); /* Apna link yahan paste kar dein */
+  /* View services button ko Book a call ke barabar aur center karne ke liye */
+      .zyrez-hero-btn--ghost {
+        height: 38px; /* Gold button ki height ke barabar kar diya */
+        padding: 0 24px; /* Upar-neeche ki jagah left-right padding set ki */
+        display: inline-flex;
+        align-items: center; /* Text ko vertical center mein laane ke liye */
+        border: none;
+        background-image: url('https://assets.cdn.filesafe.space/bGYkTtwdgUDkTHqNb1v2/media/6ac7ae458c077584b4fa0456.svg');
         background-size: 100% 100%;
         background-repeat: no-repeat;
         background-position: center;
-        color: #f9f3f3; /* Text ka color black ya apni pasand ka rakh lein */
+        color: #f9f3f3;
         font-weight: 700;
       }
       .zyrez-hero-btn--ghost:hover {
@@ -441,6 +448,7 @@ body {
         transform: translateY(-2px);
         box-shadow: 0 5px 20px rgba(255, 204, 0, 0.3);
       }
+/* Arrow Icon inside Gold Button */
       .zyrez-hero-btn-arrow {
         display: grid;
         place-items: center;
@@ -449,7 +457,8 @@ body {
         border-radius: 50%;
         background: #000;
         color: var(--zyrez-gold);
-        transition: transform 0.3s;
+        transition: transform 0.3s ease;
+        margin-left: 12px; /* Text aur icon ke darmiyan proper fasla */
       }
       .zyrez-hero-btn--gold:hover .zyrez-hero-btn-arrow {
         transform: translateX(3px);
