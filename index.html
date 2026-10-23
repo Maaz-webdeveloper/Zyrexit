@@ -507,6 +507,9 @@ body {
   user-select: none;
   will-change: transform;
   opacity: 0.18;
+  /* Isme transparent area ko thoda aur compact kar diya hai taake gradient kam se kam aur sharp lage */
+  mask-image: linear-gradient(to right, black 0%, black 36%, transparent 44%, transparent 56%, black 64%, black 100%);
+  -webkit-mask-image: linear-gradient(to right, black 0%, black 36%, transparent 44%, transparent 56%, black 64%, black 100%);
 }
 .zyrez-hero-giant img {
   display: block;
@@ -526,12 +529,13 @@ body {
         z-index: 2;
         pointer-events: none;
       }
-      .zyrez-hero-visual {
-        position: absolute;
-        inset: 0;
-        z-index: 3;
-        will-change: transform;
-      }
+.zyrez-hero-visual {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  will-change: transform;
+}
+      
       .zyrez-hero-img,
       .zyrez-hero-ph {
         position: absolute;
