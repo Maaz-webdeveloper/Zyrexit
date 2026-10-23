@@ -507,9 +507,17 @@ body {
   user-select: none;
   will-change: transform;
   opacity: 0.18;
-  /* Isme transparent area ko thoda aur compact kar diya hai taake gradient kam se kam aur sharp lage */
+  /* Desktop par mask kaam karega */
   mask-image: linear-gradient(to right, black 0%, black 36%, transparent 44%, transparent 56%, black 64%, black 100%);
   -webkit-mask-image: linear-gradient(to right, black 0%, black 36%, transparent 44%, transparent 56%, black 64%, black 100%);
+}
+
+/* Mobile screens ke liye mask ko khatam kar rahe hain taake poora text nazar aaye */
+@media (max-width: 899px) {
+  .zyrez-hero-giant {
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
 }
 .zyrez-hero-giant img {
   display: block;
