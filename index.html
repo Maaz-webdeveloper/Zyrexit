@@ -409,8 +409,10 @@ body {
       }
 /* Book a call button */
       .zyrez-hero-btn--gold {
+        display: inline-flex;
+        align-items: center;
         justify-content: space-between;
-        height: 38px;
+        height: 40px;
         padding: 0 4px 0 18px;
         background: linear-gradient(135deg, var(--zyrez-gold-light), var(--zyrez-gold));
         color: #000;
@@ -423,9 +425,11 @@ body {
       }
 /* View services button */
       .zyrez-hero-btn--ghost {
-        height: 38px;
-        padding: 0 22px;
+        display: inline-flex;
+        align-items: center;
         justify-content: center;
+        height: 40px;
+        padding: 0 24px;
         border: none;
         background-image: url('https://assets.cdn.filesafe.space/bGYkTtwdgUDkTHqNb1v2/media/6ac7ae458c077584b4fa0456.svg');
         background-size: 100% 100%;
@@ -554,8 +558,6 @@ body {
         max-width: 92%;
         transform: translateX(-50%);
         object-fit: contain;
-        -webkit-mask-image: linear-gradient(#000 78%, transparent);
-        mask-image: linear-gradient(#000 78%, transparent);
       }
       .zyrez-hero-img {
         opacity: 0;
@@ -887,6 +889,12 @@ body {
             rel="noopener noreferrer"
             >LinkedIn</a
           >
+          <a
+            href="https://www.facebook.com/zyrexit"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Facebook</a
+          >
         </div>
       </nav>
 
@@ -987,6 +995,7 @@ body {
             { label: "Blog", href: "#blog" },
             { label: "Career", href: "#career" },
             { label: "About", href: "#about" },
+            { label: "Team", href: "#team" },
             { label: "Contact", href: "#contact" },
           ],
         };
