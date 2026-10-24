@@ -558,6 +558,9 @@ body {
   inset: 0;
   z-index: 3;
   will-change: transform;
+  display: flex;             /* ✅ Add karein */
+  justify-content: center;   /* ✅ Add karein */
+  align-items: flex-end;     /* ✅ Add karein (Yeh image ko neeche rakhega) */
 }
       
       .zyrez-hero-img,
@@ -565,11 +568,12 @@ body {
         position: absolute;
         left: 50%;
         bottom: 0;
-        height: 100%;
-        width: auto;
-        max-width: 92%;
+        height: 100%;          /* ✅ Wapas 100% kiya taake screen ke end tak jaye */
+        width: 100%;           /* ✅ Width 100% ki */
+        max-width: 100%;
         transform: translateX(-50%);
-        object-fit: contain;
+        object-fit: contain;   /* ✅ Yeh image ko khichega/crop nahi karega, bas fit karega */
+        object-position: bottom center; /* ✅ Image ko neeche se align karega */
       }
       .zyrez-hero-img {
         opacity: 0;
@@ -791,7 +795,7 @@ body {
         .zyrez-hero-root {
           --zyrez-card-w: 150px;
           --zyrez-card-blur: 0px;
-          --zyrez-stage-h: clamp(320px, 84vw, 470px);
+          
         }
         .zyrez-hero-stage {
           margin-top: 18px;
