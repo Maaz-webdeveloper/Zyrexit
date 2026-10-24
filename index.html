@@ -730,59 +730,37 @@ body {
       .zyrez-hero-ready .zyrez-hero-giant {
         opacity: 1;
       }
-      /* 1. Upar wale text ke liye: Left to Right movement (Slow & Smooth) */
-      @keyframes zyrez-shine-left-to-right {
-        0% {
-          background-position: 0% 50%;
-        }
-        100% {
-          background-position: 200% 50%;
-        }
-      }
+/* Gradient animation (sample jaisi ping-pong, 6s) */
+@keyframes zyrezGradientLTR {
+  0%   { background-position: 100% 50%; }
+  50%  { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+@keyframes zyrezGradientRTL {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 
-      /* 2. Neeche wale span ke liye: Right to Left movement (Slow & Smooth) */
-      @keyframes zyrez-shine-right-to-left {
-        0% {
-          background-position: 200% 50%;
-        }
-        100% {
-          background-position: 0% 50%;
-        }
-      }
+/* Upar wali line: Powering businesses with (left to right) */
+.zyrez-animated-gradient-title {
+  background: linear-gradient(120deg, #ffcc00, #ffe680, #ffcc00, #ffe680);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: zyrezGradientLTR 6s ease-in-out infinite;
+}
 
-      /* Upar wali heading: Powering businesses with (Left to Right) */
-      .zyrez-animated-gradient-title {
-        background: linear-gradient(
-          90deg,
-          #ffffff 0%,
-          #ffcc00 25%,
-          #ffdd65 50%,
-          #ffcc00 75%,
-          #ffffff 100%
-        );
-        background-size: 250% auto;
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-        animation: zyrez-shine-left-to-right 10s linear infinite;
-      }
-
-      /* Neeche wala span: smarter digital solutions (Right to Left) */
-      .zyrez-hero-accent {
-        background: linear-gradient(
-          90deg,
-          #ffcc00 0%,
-          #ffffff 25%,
-          #ffdd65 50%,
-          #ffffff 75%,
-          #ffcc00 100%
-        );
-        background-size: 250% auto;
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-        animation: zyrez-shine-right-to-left 10s linear infinite;
-      }
+/* Neeche wali line: smarter digital solutions (right to left) */
+.zyrez-hero-accent {
+  background: linear-gradient(120deg, #ffcc00, #ffe680, #ffcc00, #ffe680);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: zyrezGradientRTL 6s ease-in-out infinite;
+}
             /* chhoti height wale laptop */
 @media (min-width: 900px) and (max-height: 760px) {
   .zyrez-hero { padding-top: 84px; }
