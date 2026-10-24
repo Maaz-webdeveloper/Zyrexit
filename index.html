@@ -889,12 +889,10 @@ body {
 
        
       }
-   @media (min-width: 900px) {
+ @media (min-width: 900px) {
   .zyrez-hero-root {
-    /* stage 60px bara hota hai taake picture 470px ki hi rahe, lekin screen ki height se zyada na ho */
-    --zyrez-stage-h: max(360px, min(calc(clamp(470px, min(44vw, 62vh), 900px) + 60px), calc(100svh - 300px)));
-  }
-  .zyrez-hero-visual { bottom: 0px; }   /* picture buttons ke oopar baithegi */
+--zyrez-stage-h: max(360px, min(calc(clamp(470px, min(44vw, 62vh), 700px) + 60px), calc(100svh - 300px)));  }
+  .zyrez-hero-visual { bottom: 0px; }
 }
       /* ✅ Tablet / iPad / Choti Laptop Screens Ke Liye Fix */
       @media (min-width: 768px) and (max-width: 1024px) {
