@@ -805,6 +805,30 @@ body {
           max-width: 32rem;
           padding-inline: clamp(12px, 5vw, 24px);
         }
+        .zyrez-hero-stage {
+          height: auto !important; /* ✅ Stage ki height khatam ki */
+          flex: 1;                 /* ✅ Stage ko bachi hui poori jagah di */
+          min-height: 50vh;        /* ✅ Image ko kam se kam aadhi screen par dikhaya */
+          display: flex;
+          align-items: flex-end;   /* ✅ Image ko neeche se touch karwaya */
+        }
+        
+        .zyrez-hero-visual {
+          position: relative !important; /* ✅ Image ko normal flow mein laya */
+          width: 100%;
+          height: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: flex-end;
+        }
+
+        .zyrez-hero-img {
+          position: relative !important;
+          width: 100%;
+          height: 100% !important;
+          object-fit: contain;
+          object-position: bottom center; /* ✅ Neeche se lock kiya */
+        }
       }
       @media (max-width: 560px) {
         .zyrez-hero-root {
@@ -847,7 +871,7 @@ body {
         /* Hero stage ka size bhi mobile ke mutabiq adjust kar lein */
 
         .zyrez-hero-root {
-          --zyrez-stage-h: clamp(280px, 75vw, 380px);
+          --zyrez-stage-h: auto;
         }
       }
    @media (min-width: 900px) {
