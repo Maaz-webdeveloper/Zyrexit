@@ -807,7 +807,6 @@ body {
           --zyrez-card-w: 150px;
           --zyrez-card-blur: 0px;
         }
-        
         .zyrez-hero-stage {
           margin-top: 10px;
           height: auto !important;      /* Stage ki fixed height khatam ki */
@@ -833,11 +832,12 @@ body {
           left: auto !important;
           bottom: auto !important;
           transform: none !important;    
-          height: auto !important;       
+          height: 100% !important;       /* ✅ Image ko box ke andar rakha */
+          max-height: 100%;              /* ✅ Screen se bahar jaane se roka */
           width: 100%;
           max-width: 100%;
           display: block;
-          margin: 0 auto;                /* ✅ Image ko center karne ke liye */
+          margin: 0 auto;                
           object-fit: contain;
         }
         
@@ -896,6 +896,17 @@ body {
   }
   .zyrez-hero-visual { bottom: 0px; }   /* picture buttons ke oopar baithegi */
 }
+      /* ✅ Tablet / iPad / Choti Laptop Screens Ke Liye Fix */
+      @media (min-width: 768px) and (max-width: 1024px) {
+        .zyrez-hero-root {
+          --zyrez-stage-h: 520px !important; /* Tablet par image area ki height fix ki */
+        }
+        .zyrez-hero-img {
+          height: 100% !important;
+          max-height: 100% !important;
+          object-fit: contain !important;
+        }
+      }
     </style>
 
     <div class="zyrez-hero-root" id="zyrez-hero-root">
