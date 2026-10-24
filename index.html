@@ -408,9 +408,9 @@ body {
 .zyrez-hero-btn {
         display: inline-flex;
         align-items: center;
-        justify-content: center; /* Center align kiya */
-  width: 175px;            /* 👈 YEH ADD KARO: Dono buttons ki width ab barabar hogi */
-  height: 44px;            /* 👈 YEH ADD KARO: Height bhi fix kar do */ 
+        justify-content: center;
+        width: 180px;            /* ✅ Width barha kar 180px ki taake dono barabar lagein */
+        height: 46px;            /* ✅ Height barha kar 46px ki */
         border-radius: 999px;
         font-size: 11px;
         font-weight: 700;
@@ -418,6 +418,7 @@ body {
         line-height: 1;
         text-transform: uppercase;
         transition: transform 0.3s, box-shadow 0.3s, background 0.3s, border-color 0.3s;
+        box-sizing: border-box;  /* ✅ Ensure padding size ke andar rahe */
       }
 /* Book a call button */
       .zyrez-hero-btn--gold {
