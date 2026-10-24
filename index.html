@@ -530,6 +530,16 @@ body {
 
 /* Mobile screens ke liye mask ko khatam kar rahe hain taake poora text nazar aaye */
 @media (max-width: 899px) {
+   .zyrez-hero {
+          height: auto !important;      /* ✅ Mobile par fix height hata di */
+          min-height: 100svh;           /* ✅ Kam se kam poori screen cover kare */
+          padding-bottom: 0 !important; /* ✅ Neeche se extra gap hata diya */
+        }
+
+        .zyrez-hero-root {
+          --zyrez-card-w: 150px;
+          --zyrez-card-blur: 0px;
+        }
   .zyrez-hero-giant {
     mask-image: none;
     -webkit-mask-image: none;
@@ -798,7 +808,7 @@ body {
         }
         
         .zyrez-hero-stage {
-          margin-top: 30px;
+          margin-top: 10px;
           height: auto !important;      /* Stage ki fixed height khatam ki */
           flex: 1 1 auto;               /* Bacha hua space stage ko diya */
           display: flex;
@@ -821,11 +831,12 @@ body {
           position: relative !important;
           left: auto !important;
           bottom: auto !important;
-          transform: none !important;    /* Translate hata diya */
-          height: auto !important;       /* Image apne asli size mein rahegi, stretch nahi hogi */
+          transform: none !important;    
+          height: auto !important;       
           width: 100%;
           max-width: 100%;
           display: block;
+          margin: 0 auto;                /* ✅ Image ko center karne ke liye */
           object-fit: contain;
         }
         
