@@ -80,6 +80,7 @@ html,
 body {
   width: 100%;
   height: 100%;
+   overflow-x: hidden;
 }
       /* ===== 1. CONFIG: colors, sizes, orbit look (change values here) ===== */
       .zyrez-hero-root {
@@ -407,6 +408,9 @@ body {
 .zyrez-hero-btn {
         display: inline-flex;
         align-items: center;
+        justify-content: center; /* Center align kiya */
+  width: 175px;            /* 👈 YEH ADD KARO: Dono buttons ki width ab barabar hogi */
+  height: 44px;            /* 👈 YEH ADD KARO: Height bhi fix kar do */ 
         border-radius: 999px;
         font-size: 11px;
         font-weight: 700;
@@ -419,9 +423,10 @@ body {
       .zyrez-hero-btn--gold {
         display: inline-flex;
         align-items: center;
-        justify-content: space-between;
-        height: 40px;
-        padding: 0 4px 0 18px;
+        position: relative;
+         justify-content: center;   
+        height: 44px;
+        padding: 0 40px 0 15px;
         background: linear-gradient(135deg, var(--zyrez-gold-light), var(--zyrez-gold));
         color: #000;
         border: none;
@@ -432,19 +437,19 @@ body {
         box-shadow: 0 10px 30px rgba(255, 204, 0, 0.35);
       }
 /* View services button */
-      .zyrez-hero-btn--ghost {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        height: 40px;
-        padding: 0 24px;
-        border: none;
-        background-image: url('https://assets.cdn.filesafe.space/bGYkTtwdgUDkTHqNb1v2/media/6ac7ae458c077584b4fa0456.svg');
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
-        background-position: center;
-        color: #f9f3f3;
-      }
+  .zyrez-hero-btn--ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;   /* Padding adjust ki */
+  border: none;
+  background-image: url('https://assets.cdn.filesafe.space/bGYkTtwdgUDkTHqNb1v2/media/6ac7ae458c077584b4fa0456.svg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  color: #f9f3f3;
+  height: 44px;      /* Height match ki */
+}
 .zyrez-hero-btn--ghost:hover {
         opacity: 0.9;
         transform: translateY(-2px);
@@ -453,52 +458,51 @@ body {
 /* Arrow Icon inside Gold Button */
       .zyrez-hero-btn-arrow {
         display: grid;
+        position: absolute;
+          right: 4px;
+           top: 50%;
+              transform: translateY(-50%);
         place-items: center;
-        width: 30px;
-        height: 30px;
+        width: 34px;
+        height: 34px;
         border-radius: 50%;
         background: #000;
         color: var(--zyrez-gold);
         transition: transform 0.3s ease;
-        margin-left: 10px;
+        margin-left: 0;
       }
 .zyrez-hero-btn--gold:hover .zyrez-hero-btn-arrow {
-        transform: translateX(3px);
-      }
+  transform: translateY(-50%) translateX(3px); /* 👈 Yahan fix kiya */
+}
 /* ===== MOBILE RESPONSIVE FIX FOR BUTTONS ===== */
-      @media (max-width: 560px) {
-        .zyrez-hero-cta {
-          gap: 12px;
-          padding: 0 16px;
-          flex-direction: row; /* Dono buttons aik line mein hi rahein */
-          justify-content: center;
-        }
+  @media (max-width: 560px) {
+  .zyrez-hero-cta {
+    gap: 10px; /* Gap thoda kam kiya */
+    padding: 0 10px;
+    flex-direction: row;
+    justify-content: center;
+  }
 
-        .zyrez-hero-btn--gold {
-          height: 38px;
-          padding: 0 4px 0 16px; /* Mobile par left padding */
-          display: inline-flex;
-          align-items: center;
-          justify-content: space-between;
-        }
+  .zyrez-hero-btn {
+    width: 150px;  /* 👈 Mobile par thodi choti width */
+    height: 38px;  /* 👈 Mobile height */
+  }
 
-        .zyrez-hero-btn--ghost {
-          height: 38px;
-          padding: 0 18px;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 10px;
-        }
+  .zyrez-hero-btn--gold {
+    padding: 0 36px 0 10px;
+     justify-content: center;
+  }
 
-        .zyrez-hero-btn-arrow {
-          width: 30px;
-          height: 30px;
-          margin-left: 8px;
-          display: grid;
-          place-items: center;
-        }
-      }
+  .zyrez-hero-btn--ghost {
+    padding: 0 10px;
+    font-size: 10px;
+  }
+  
+  .zyrez-hero-btn-arrow {
+    width: 28px;
+    height: 28px;
+  }
+}
       /* ===== 5. VISUAL STAGE: image + orbit ===== */
       .zyrez-hero-stage {
         position: relative;
