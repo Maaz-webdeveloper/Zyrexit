@@ -1061,6 +1061,71 @@ body {
 .zyrez-hero-title .zyrez-hero-accent {
   font-size: 0.98em;
 }
+/* ===== Side boxes + dotted lines (desktop) ===== */
+.zyrez-dots,
+.zyrez-side-box {
+  display: none;
+}
+@media (min-width: 900px) {
+  .zyrez-dots {
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 30%;
+    width: 64%;
+    height: 48%;
+    transform: translate(-50%, -50%);
+    border: 2px dotted rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    clip-path: inset(50% 0 0 0); /* sirf neeche wala aadha hissa */
+    z-index: 2;
+    pointer-events: none;
+  }
+  .zyrez-side-box {
+    position: absolute;
+    z-index: 4;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    width: clamp(150px, 13vw, 230px);
+    aspect-ratio: 1 / 0.75;
+    border-radius: 22px;
+    background: linear-gradient(145deg, #0e0e0e, #030303);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    text-align: center;
+    animation: zyrezBoxFloat 6s ease-in-out infinite;
+  }
+  .zyrez-side-box--left {
+    left: 13%;
+    top: 0;
+    rotate: -6deg;
+  }
+  .zyrez-side-box--right {
+    right: 14%;
+    top: 2%;
+    rotate: 8deg;
+    flex-direction: row;
+    animation-delay: -3s;
+  }
+  .zyrez-side-box b {
+    font-size: 1.3rem;
+    color: var(--zyrez-gold);
+  }
+  .zyrez-side-box small {
+    font-size: 11px;
+    color: var(--zyrez-muted);
+  }
+  .zyrez-side-box .zyrez-hero-avs {
+    display: flex;
+  }
+}
+@keyframes zyrezBoxFloat {
+  0%, 100% { translate: 0 0; }
+  50%      { translate: 0 -8px; }
+}
     </style>
 
     <div class="zyrez-hero-root" id="zyrez-hero-root">
@@ -1171,8 +1236,18 @@ body {
           >
         </div>
         <div class="zyrez-hero-stage">
-          <!-- <span class="zyrez-hero-ring" aria-hidden="true"></span> -->
+<span class="zyrez-dots" aria-hidden="true"></span>
 
+<div class="zyrez-side-box zyrez-side-box--left">
+  <!-- REPLACE: apna text likhein -->
+  <b>100+</b>
+  <small>Projects delivered</small>
+</div>
+
+<div class="zyrez-side-box zyrez-side-box--right">
+  <span class="zyrez-hero-avs"><i></i><i></i><i></i><i></i><i></i></span>
+  <b>50+</b>
+</div>
           <div class="zyrez-hero-visual">
             <!-- REPLACE HERO IMAGE HERE: paste a transparent PNG/WebP URL (person cut-out) between the quotes of src -->
             <img
