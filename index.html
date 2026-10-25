@@ -1063,24 +1063,11 @@ body {
 }
 /* ===== Side boxes + dotted lines (desktop) ===== */
 .zyrez-dots,
+/* ===== Side boxes + short dotted arcs (desktop) ===== */
 .zyrez-side-box {
   display: none;
 }
 @media (min-width: 900px) {
-  .zyrez-dots {
-    display: block;
-    position: absolute;
-    left: 50%;
-    top: 30%;
-    width: 64%;
-    height: 48%;
-    transform: translate(-50%, -50%);
-    border: 2px dotted rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
-    clip-path: inset(50% 0 0 0); /* sirf neeche wala aadha hissa */
-    z-index: 2;
-    pointer-events: none;
-  }
   .zyrez-side-box {
     position: absolute;
     z-index: 4;
@@ -1099,16 +1086,36 @@ body {
     animation: zyrezBoxFloat 6s ease-in-out infinite;
   }
   .zyrez-side-box--left {
-    left: 13%;
+    left: 19%;
     top: 0;
     rotate: -6deg;
   }
   .zyrez-side-box--right {
-    right: 14%;
+    right: 19%;
     top: 2%;
     rotate: 8deg;
     flex-direction: row;
     animation-delay: -3s;
+  }
+  /* chhota dotted arc: box ke neeche se face ki taraf */
+  .zyrez-side-box::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    width: 70px;
+    height: 50px;
+    pointer-events: none;
+    border-bottom: 2px dotted rgba(255, 255, 255, 0.35);
+  }
+  .zyrez-side-box--left::after {
+    left: 50%;
+    border-left: 2px dotted rgba(255, 255, 255, 0.35);
+    border-bottom-left-radius: 100%;
+  }
+  .zyrez-side-box--right::after {
+    right: 50%;
+    border-right: 2px dotted rgba(255, 255, 255, 0.35);
+    border-bottom-right-radius: 100%;
   }
   .zyrez-side-box b {
     font-size: 1.3rem;
@@ -1236,7 +1243,6 @@ body {
           >
         </div>
         <div class="zyrez-hero-stage">
-<span class="zyrez-dots" aria-hidden="true"></span>
 
 <div class="zyrez-side-box zyrez-side-box--left">
   <!-- REPLACE: apna text likhein -->
