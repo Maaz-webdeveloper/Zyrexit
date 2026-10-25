@@ -929,26 +929,41 @@ body {
         }
       }
       /* Book a call button: View services ke barabar */
-@media (min-width: 561px) {
-  .zyrez-hero-btn--gold {
-    width: 164px;
-    height: 40px;
-  }
-  .zyrez-hero-btn--gold .zyrez-hero-btn-arrow {
-    width: 30px;
-    height: 30px;
-  }
+/* Dono CTA buttons: bilkul same size */
+.zyrez-hero-btn--gold,
+.zyrez-hero-btn--ghost {
+  box-sizing: border-box !important;
+  width: 170px !important;
+  height: 42px !important;
+  font-size: 11px !important;
 }
+.zyrez-hero-btn--gold {
+  padding: 0 34px 0 14px !important;
+}
+.zyrez-hero-btn--ghost {
+  padding: 0 14px !important;
+}
+.zyrez-hero-btn--gold .zyrez-hero-btn-arrow {
+  width: 32px;
+  height: 32px;
+}
+
 @media (max-width: 560px) {
+  .zyrez-hero-btn--gold,
+  .zyrez-hero-btn--ghost {
+    width: 146px !important;
+    height: 36px !important;
+    font-size: 10px !important;
+  }
   .zyrez-hero-btn--gold {
-    width: 140px;
-    height: 34px;
-    padding: 0 30px 0 8px;
-    font-size: 10px;
+    padding: 0 28px 0 8px !important;
+  }
+  .zyrez-hero-btn--ghost {
+    padding: 0 8px !important;
   }
   .zyrez-hero-btn--gold .zyrez-hero-btn-arrow {
-    width: 24px;
-    height: 24px;
+    width: 26px;
+    height: 26px;
   }
 }
     </style>
