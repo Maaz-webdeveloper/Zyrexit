@@ -995,29 +995,7 @@ body {
  @media (min-width: 900px) {
   .zyrez-hero-root {
 --zyrez-stage-h: max(360px, min(calc(clamp(470px, min(44vw, 62vh), 700px) + 60px), calc(100svh - 300px)));  }
-    .zyrez-hero-visual {
-    bottom: 0px;
-  }
-  .zyrez-hero-visual::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 24%;
-    z-index: 5;
-    pointer-events: none;
-    background: linear-gradient(
-      to top,
-      #000 0%,
-      rgba(0, 0, 0, 0.9) 30%,
-      rgba(0, 0, 0, 0) 100%
-    );
-  }
-  .zyrez-hero-img {
-    scale: 1.12;
-    transform-origin: 50% 100%;
-  }
+  .zyrez-hero-visual { bottom: 0px; }
   .zyrez-hero-stage {
   height: auto;
   flex: 1 1 0;
