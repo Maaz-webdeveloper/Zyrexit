@@ -1108,26 +1108,7 @@ body {
   flex-direction: row;
   animation-delay: -3s;
 }
-  /* chhota dotted arc: box ke neeche se face ki taraf */
-  .zyrez-side-box::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    width: 70px;
-    height: 50px;
-    pointer-events: none;
-    border-bottom: 2px dotted rgba(255, 255, 255, 0.35);
-  }
-  .zyrez-side-box--left::after {
-    left: 50%;
-    border-left: 2px dotted rgba(255, 255, 255, 0.35);
-    border-bottom-left-radius: 100%;
-  }
-  .zyrez-side-box--right::after {
-    right: 50%;
-    border-right: 2px dotted rgba(255, 255, 255, 0.35);
-    border-bottom-right-radius: 100%;
-  }
+
   .zyrez-side-box b {
     font-size: 1.3rem;
     color: var(--zyrez-gold);
@@ -1183,6 +1164,29 @@ body {
 @media (min-width: 1200px) { .zyrez-hero-visual { scale: 1.10; } }
 @media (min-width: 1400px) { .zyrez-hero-visual { scale: 1.10; } }
 @media (min-width: 1650px) { .zyrez-hero-visual { scale: 1.25; } }
+/* Side boxes se face tak curved dotted lines (desktop) */
+.zyrez-links {
+  display: none;
+}
+@media (min-width: 900px) {
+  .zyrez-links {
+    display: block;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .zyrez-links path {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.35);
+    stroke-width: 2;
+    stroke-dasharray: 2 8;
+    stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+  }
+}
     </style>
 
     <div class="zyrez-hero-root" id="zyrez-hero-root">
@@ -1292,6 +1296,10 @@ body {
             >View services</a
           >
         </div>
+        <svg class="zyrez-links" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+  <path d="M16.5 52 C16.5 64, 32 50, 42 54" />
+<path d="M83 58 C83 69, 69 54, 61 58" />
+</svg>
       <div class="zyrez-side-box zyrez-side-box--left">
   <b>5.0</b>
   <span class="zyrez-stars" aria-label="5 star rating">★★★★★</span>
