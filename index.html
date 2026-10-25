@@ -864,23 +864,28 @@ body {
   width: fit-content;
   margin-inline: auto;
 }
-@keyframes zyrezLetterShade {
-  0%, 100% { color: #ffcc00; }
-  25%, 75% { color: #ffe680; }
-  50%      { color: #ffffff; }
+@keyframes zyrezShineFlow {
+  from { background-position: 100% 0; }
+  to   { background-position: 0% 0; }
 }
 
 .zyrez-animated-gradient-title,
 .zyrez-hero-accent {
-  background: none;
-  animation: none;
-  -webkit-text-fill-color: currentColor;
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: zyrezShineFlow 8s linear infinite;
 }
 
-.zyrez-ch {
-  color: #ffcc00;
-  -webkit-text-fill-color: currentColor;
-  animation: zyrezLetterShade 6s ease-in-out infinite;
+/* Upar wali line: yellow - white - yellow */
+.zyrez-animated-gradient-title {
+  background-image: linear-gradient(90deg, #ffcc00, #fff0a8, #ffffff, #fff0a8, #ffcc00, #fff0a8, #ffffff, #fff0a8, #ffcc00);
+}
+
+/* Neeche wali line: white - yellow - white (upar wali ka ulta) */
+.zyrez-hero-accent {
+  background-image: linear-gradient(90deg, #ffffff, #fff0a8, #ffcc00, #fff0a8, #ffffff, #fff0a8, #ffcc00, #fff0a8, #ffffff);
 }
             /* chhoti height wale laptop */
 @media (min-width: 900px) and (max-height: 760px) {
@@ -1347,22 +1352,7 @@ body {
           return root.querySelector(s);
         };
         root.classList.add("zyrez-hero-js");
-        /* Letter-wise shade wave */
-root.querySelectorAll(".zyrez-line").forEach(function (line, li) {
-  var text = line.textContent.trim();
-  line.textContent = "";
-  line.setAttribute("aria-label", text);
-  var n = text.length;
-  for (var i = 0; i < n; i++) {
-    var s = document.createElement("span");
-    s.className = "zyrez-ch";
-    s.setAttribute("aria-hidden", "true");
-    s.textContent = text[i];
-    var pos = li === 0 ? i : n - 1 - i; /* line 1: left to right, line 2: right to left */
-    s.style.animationDelay = -6 + pos * 0.12 + "s";
-    line.appendChild(s);
-  }
-});
+  
         /* ---- Full-bleed: break out of the GHL column without causing sideways scroll ---- */
         function bleed() {
           if (!CONFIG.fullBleed) return;
