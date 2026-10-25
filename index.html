@@ -92,16 +92,7 @@
     text-wrap: balance;
   }
 }
-/* Mobile: ladke ki image ko center karna */
-@media (max-width: 899px) {
-  .zyrez-hero-visual {
-    justify-content: center !important;
-  }
-  .zyrez-hero-img {
-    object-position: center bottom !important;
-    translate: 0 0;
-  }
-}
+
 /* ===== 3D glass ring ===== */
 .zyrez-ring-wrap {
   position: absolute;
@@ -942,7 +933,7 @@ body {
           position: relative !important; /* Image ko absolute se normal kiya */
           inset: auto !important;
           width: 100%;
-          height: clamp(260px, 52svh, 460px) !important;
+          height: clamp(200px, 40svh, 360px) !important;
           display: flex;
           justify-content: center;
           align-items: flex-end;
@@ -961,6 +952,7 @@ body {
           display: block;
           margin: 0 auto;                
           object-fit: contain;
+          translate: -5% 0;
         }
         
         .zyrez-hero-text {
@@ -1160,12 +1152,7 @@ body {
     mask-image: linear-gradient(to bottom, #000 82%, transparent 100%);
   }
 }
-/* Mobile: visual chhota taake poora hero ek screen mein aaye */
-@media (max-width: 899px) {
-  .zyrez-hero-visual {
-    height: clamp(200px, 40svh, 360px) !important;
-  }
-}
+
     </style>
 
     <div class="zyrez-hero-root" id="zyrez-hero-root">
