@@ -995,19 +995,28 @@ body {
  @media (min-width: 900px) {
   .zyrez-hero-root {
 --zyrez-stage-h: max(360px, min(calc(clamp(470px, min(44vw, 62vh), 700px) + 60px), calc(100svh - 300px)));  }
-  .zyrez-hero-visual { bottom: 0px; }
+.zyrez-hero-visual {
+  bottom: 0px;
+    scale: 1;
+  transition: scale 0.4s ease;
+  transform-origin: center bottom;
+}
   .zyrez-hero-stage {
   height: auto;
   flex: 1 1 0;
   min-height: 320px;
 }
-  .zyrez-hero-visual {
-    bottom: 0px;
-    scale: 1.06;
-    transform-origin: center bottom;
-    -webkit-mask-image: linear-gradient(to bottom, #000 85%, transparent 100%);
-    mask-image: linear-gradient(to bottom, #000 85%, transparent 100%);
-  }
+ .zyrez-hero-stage::after {
+  content: "";
+  position: absolute;
+  left: -40px;
+  right: -40px;
+  bottom: 0;
+  height: 26%;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), #000 92%);
+  z-index: 4;
+  pointer-events: none;
+}
 }
       /* ✅ Tablet / iPad / Choti Laptop Screens Ke Liye Fix */
       @media (min-width: 768px) and (max-width: 1024px) {
@@ -1159,7 +1168,11 @@ body {
     mask-image: linear-gradient(to bottom, #000 82%, transparent 100%);
   }
 }
-
+/* Desktop: character screen ki width ke saath aahista bara ho */
+@media (min-width: 1050px) { .zyrez-hero-visual { scale: 1.06; } }
+@media (min-width: 1200px) { .zyrez-hero-visual { scale: 1.10; } }
+@media (min-width: 1400px) { .zyrez-hero-visual { scale: 1.10; } }
+@media (min-width: 1650px) { .zyrez-hero-visual { scale: 1.25; } }
     </style>
 
     <div class="zyrez-hero-root" id="zyrez-hero-root">
