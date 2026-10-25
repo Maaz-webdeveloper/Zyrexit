@@ -102,6 +102,65 @@
     translate: 0 0;
   }
 }
+/* ===== 3D glass ring ===== */
+.zyrez-ring-wrap {
+  position: absolute;
+  inset: 0;
+  display: none;
+  pointer-events: none;
+  perspective: 1100px;
+  perspective-origin: 50% var(--zyrez-orbit-cy);
+}
+.zyrez-ring-wrap--back { z-index: 2; }
+.zyrez-ring-wrap--front { z-index: 5; }
+@media (min-width: 900px) {
+  .zyrez-ring-wrap { display: block; }
+}
+.zyrez-ring {
+  position: absolute;
+  left: 50%;
+  top: var(--zyrez-orbit-cy);
+  width: 0;
+  height: 0;
+  transform-style: preserve-3d;
+  animation: zyrezRingSpin 24s linear infinite;
+}
+@keyframes zyrezRingSpin {
+  from { transform: rotateX(-12deg) rotateZ(-6deg) rotateY(0deg); }
+  to   { transform: rotateX(-12deg) rotateZ(-6deg) rotateY(360deg); }
+}
+.zyrez-ring-strip,
+.zyrez-ring-card {
+  position: absolute;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+.zyrez-ring-strip {
+  left: calc(var(--zw) / -2);
+  top: calc(var(--zh) / -2);
+  width: var(--zw);
+  height: var(--zh);
+  background: linear-gradient(180deg, rgba(255,255,255,0.34), rgba(255,255,255,0.08));
+  border-top: 1px solid rgba(255,255,255,0.4);
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+.zyrez-ring-card {
+  left: -92px;
+  top: -30px;
+  width: 184px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 14px;
+  border-radius: 16px;
+  background: linear-gradient(145deg, rgba(255,255,255,0.95), rgba(235,235,240,0.8));
+  color: #111;
+  text-align: left;
+  box-shadow: 0 14px 30px rgba(0,0,0,0.45);
+}
+.zyrez-ring-card b { display: block; font-size: 14px; line-height: 1.2; }
+.zyrez-ring-card small { display: block; margin-top: 2px; font-size: 10px; line-height: 1.3; color: #555; }
     </style>
     <div class="zyrez-cursor-ball" id="zyrezCursorBall"></div>
     <script>
@@ -1129,10 +1188,7 @@ body {
            data-depth        : mouse parallax strength (0-1)
            data-float / data-rot : floating (px) and tilt (deg)
            data-min          : show only when screen width >= this (0 = also on mobile) -->
-          <div class="zyrez-hero-orbit">
-            <!-- FLOATING CARD 0-->
-            <!-- //add krna ha 3d card -->
-          </div>
+  <div class="zyrez-hero-orbit"></div>
         </div>
       </section>
     </div>
@@ -1306,29 +1362,23 @@ root.querySelectorAll(".zyrez-line").forEach(function (line, li) {
           T += Math.min(dt, 0.05);
           mx += (tx - mx) * 0.06;
           my += (ty - my) * 0.06;
-          cards.forEach(function (c) {
+                  cards.forEach(function (c) {
             if (!c.on) return;
             var a = ((c.ph + T * c.sp * CONFIG.orbitSpeed) * Math.PI) / 180,
               s = Math.sin(a),
               co = Math.cos(a);
-            var half = Math.max(40, VW / 2 - c.w / 2 - 10); // keep cards inside the screen
-            var x = co * Math.min(c.rx * W, half);
+            var half = Math.max(40, VW / 2 - c.w / 2 - 10);
+            var x = co * Math.min(c.rx * H, half);
             var y =
-              s * c.ry * H +
+              s * c.ry * H * 0.45 +
               Math.sin(T * 0.9 + c.ph) * c.fl * CONFIG.floatAmount;
             var k = fine ? CONFIG.mouseStrength * c.dp * 22 : 0;
-            var rot = Math.sin(T * 0.6 + c.ph) * c.rt + co * 3;
+            var rot = Math.sin(T * 0.6 + c.ph) * c.rt;
             c.el.style.transform =
-              "translate3d(" +
-              (x + mx * k) +
-              "px," +
-              (y + my * k) +
-              "px,0) translate(-50%,-50%) rotate(" +
-              rot +
-              "deg) scale(" +
-              (1 + s * 0.1) +
-              ")";
-            c.el.style.zIndex = s > 0 ? 5 : 2; // top half passes behind the person
+              "translate3d(" + (x + mx * k) + "px," + (y + my * k) + "px,0) " +
+              "translate(-50%,-50%) perspective(800px) rotateY(" + co * 55 + "deg) " +
+              "rotateZ(" + rot + "deg) scale(" + (1 + s * 0.18) + ")";
+            c.el.style.zIndex = s > 0 ? 5 : 2; // s > 0: card aage, s < 0: ladke ke peeche
           });
           if (fine && CONFIG.mouseStrength) {
             visual.style.transform =
@@ -1367,7 +1417,57 @@ root.querySelectorAll(".zyrez-line").forEach(function (line, li) {
           measure();
           if (!run) frame(performance.now());
         });
-
+/* ---- 3D glass ring ---- */
+var orbitBox = $(".zyrez-hero-orbit");
+var RING_N = 12;
+var ringCards = [
+  { t: "Focus", s: "Deep work, bigger results", a: 20,
+    ic: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/>' },
+  { t: "Ideas", s: "Capture everything", a: 140,
+    ic: '<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.5 1 2.5h6c0-1 .3-1.8 1-2.5A6 6 0 0 0 12 3z"/>' },
+  { t: "Plan", s: "Turn ideas into action", a: 260,
+    ic: '<path d="M9 11l3 3 8-8M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h9"/>' },
+];
+function buildRing(cls, inward) {
+  var wrap = document.createElement("div");
+  wrap.className = "zyrez-ring-wrap " + cls;
+  wrap.setAttribute("aria-hidden", "true");
+  var ring = document.createElement("div");
+  ring.className = "zyrez-ring";
+  var flip = inward ? " rotateY(180deg)" : "";
+  for (var i = 0; i < RING_N; i++) {
+    var st = document.createElement("div");
+    st.className = "zyrez-ring-strip";
+    st.style.transform =
+      "rotateY(" + (i * 360) / RING_N + "deg) translateZ(var(--zr))" + flip;
+    ring.appendChild(st);
+  }
+  ringCards.forEach(function (c) {
+    var d = document.createElement("div");
+    d.className = "zyrez-ring-card";
+    d.innerHTML =
+      '<span class="zyrez-hero-ico"><svg viewBox="0 0 24 24">' + c.ic +
+      "</svg></span><div><b>" + c.t + "</b><small>" + c.s + "</small></div>";
+    d.style.transform =
+      "rotateY(" + c.a + "deg) translateZ(calc(var(--zr) + 26px))" + flip;
+    ring.appendChild(d);
+  });
+  wrap.appendChild(ring);
+  orbitBox.appendChild(wrap);
+}
+buildRing("zyrez-ring-wrap--back", true);
+buildRing("zyrez-ring-wrap--front", false);
+function sizeRing() {
+  var r = stage.getBoundingClientRect();
+  var R = Math.min(r.width * 0.26, r.height * 0.6);
+  var w = 2 * R * Math.tan(Math.PI / RING_N) * 1.03;
+  orbitBox.style.setProperty("--zr", R + "px");
+  orbitBox.style.setProperty("--zw", w + "px");
+  orbitBox.style.setProperty("--zh", R * 0.5 + "px");
+}
+sizeRing();
+window.addEventListener("resize", sizeRing);
+window.addEventListener("load", sizeRing);
         /* ---- Start (after the preloader begins leaving, if present) ---- */
         function start() {
           bleed();
