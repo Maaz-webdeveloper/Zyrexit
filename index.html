@@ -369,6 +369,7 @@ body {
         letter-spacing: 0.5em;
         padding-left: 0.5em;
         text-transform: uppercase;
+          margin-top: 50px;
       }
       .zyrez-hero-title {
         margin-top: 18px;
@@ -530,8 +531,8 @@ body {
       }
 .zyrez-hero-giant {
   position: absolute;
-  left: -20px;   /* 20px extra both sides so mouse parallax never shows a gap */
-  right: -20px;
+  left: -6%;   /* 20px extra both sides so mouse parallax never shows a gap */
+  right: -6%;
   bottom: 0;
   z-index: 2;
   pointer-events: none;
@@ -748,23 +749,23 @@ body {
   width: fit-content;
   margin-inline: auto;
 }
-.zyrez-animated-gradient-title {
-  background: linear-gradient(120deg, #ffcc00, #ffe680, #ffffff, #ffe680, #ffcc00);
-  background-size: 300% 300%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: zyrezGradientLTR 6s ease-in-out infinite;
+@keyframes zyrezLetterShade {
+  0%, 100% { color: #ffcc00; }
+  25%, 75% { color: #ffe680; }
+  50%      { color: #ffffff; }
 }
 
-/* Neeche wali line: smarter digital solutions (right to left) */
+.zyrez-animated-gradient-title,
 .zyrez-hero-accent {
-  background: linear-gradient(120deg, #ffcc00, #ffe680, #ffffff, #ffe680, #ffcc00);
-  background-size: 300% 300%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: zyrezGradientRTL 6s ease-in-out infinite;
+  background: none;
+  animation: none;
+  -webkit-text-fill-color: currentColor;
+}
+
+.zyrez-ch {
+  color: #ffcc00;
+  -webkit-text-fill-color: currentColor;
+  animation: zyrezLetterShade 6s ease-in-out infinite;
 }
             /* chhoti height wale laptop */
 @media (min-width: 900px) and (max-height: 760px) {
@@ -795,7 +796,7 @@ body {
           position: absolute;
           left: 0;
           right: 0;
-          bottom: 0px;
+          bottom: 15px;
           margin-top: 0;
         }
       }
@@ -1071,7 +1072,22 @@ body {
           return root.querySelector(s);
         };
         root.classList.add("zyrez-hero-js");
-
+        /* Letter-wise shade wave */
+root.querySelectorAll(".zyrez-line").forEach(function (line, li) {
+  var text = line.textContent.trim();
+  line.textContent = "";
+  line.setAttribute("aria-label", text);
+  var n = text.length;
+  for (var i = 0; i < n; i++) {
+    var s = document.createElement("span");
+    s.className = "zyrez-ch";
+    s.setAttribute("aria-hidden", "true");
+    s.textContent = text[i];
+    var pos = li === 0 ? i : n - 1 - i; /* line 1: left to right, line 2: right to left */
+    s.style.animationDelay = -6 + pos * 0.12 + "s";
+    line.appendChild(s);
+  }
+});
         /* ---- Full-bleed: break out of the GHL column without causing sideways scroll ---- */
         function bleed() {
           if (!CONFIG.fullBleed) return;
