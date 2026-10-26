@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
     <title>Zyrex</title>
+    <style>
+      *::selection,
+      *::-moz-selection {
+        background-color: #ffcc00 !important;
+        color: #000000 !important;
+      }
+    </style>
   </head>
   <body>
     <!-- ═══════════════════════════════════════════════════════════════
@@ -199,17 +206,6 @@ h1, p, h1 *, p * {
   user-select: text;
 }
 
-/* Selection highlight - positioned at end for maximum specificity */
-h1::selection, p::selection, h1 *::selection, p *::selection,
-h1::-moz-selection, p::-moz-selection, h1 *::-moz-selection, p *::-moz-selection,
-::selection, ::-moz-selection,
-._zyrez-force-selection::selection,
-._zyrez-force-selection::-moz-selection {
-  background-color: #ffcc00 !important;
-  color: #000000 !important;
-  -webkit-text-fill-color: #000000 !important;
-  text-shadow: none !important;
-}
 
 /* Force the selection class on key elements via JS if needed */
 
@@ -1619,5 +1615,15 @@ window.addEventListener("load", sizeRing);
         }, 16000); // failsafe
       })();
     </script>
+    <style>
+      .zyrez-hero-root *::selection,
+      .zyrez-hero-root *::-moz-selection {
+        background-color: #ffcc00 !important;
+        color: #000000 !important;
+        -webkit-text-fill-color: #000000 !important;
+        -webkit-background-clip: initial !important;
+        background-clip: initial !important;
+      }
+    </style>
   </body>
 </html>
