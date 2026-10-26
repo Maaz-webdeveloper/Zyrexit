@@ -327,42 +327,37 @@ body {
         );
         transition: transform 0.5s var(--zyrez-ease);
       }
-      .zyrez-nav-icon i {
+      .zyrez-nav-icon-svg {
         position: absolute;
-        left: 9px;
-        width: 14px;
-        height: 2px;
-        border-radius: 2px;
-        background: #000;
-        transition:
-          top 0.45s var(--zyrez-ease),
-          transform 0.45s var(--zyrez-ease);
+        inset: 0;
+        width: 32px;
+        height: 32px;
+        overflow: visible;
       }
-      .zyrez-nav-icon i:nth-child(1) {
-        top: 12px;
+      .zyrez-nav-line {
+        fill: #000;
+        stroke: none; /* solid fill only — no stroke, no dasharray */
+        transition: transform 0.45s var(--zyrez-ease);
+        transform-origin: center;
       }
-      .zyrez-nav-icon i:nth-child(2) {
-        top: 18px;
-      }
-      .zyrez-nav-btn:hover .zyrez-nav-icon i:nth-child(1) {
-        top: 10px;
-      }
-      .zyrez-nav-btn:hover .zyrez-nav-icon i:nth-child(2) {
-        top: 20px;
-      }
+      .zyrez-nav-line--a { transform: translateY(0); }
+      .zyrez-nav-line--b { transform: translateY(0); }
+      .zyrez-nav-btn:hover .zyrez-nav-line--a { transform: translateY(-2px); }
+      .zyrez-nav-btn:hover .zyrez-nav-line--b { transform: translateY(2px); }
       .zyrez-menu-open .zyrez-nav-label span {
         transform: translateY(-100%);
       }
       .zyrez-menu-open .zyrez-nav-icon {
-        transform: rotate(90deg);
+        transform: none;
       }
-      .zyrez-menu-open .zyrez-nav-icon i:nth-child(1) {
-        top: 15px;
-        transform: rotate(45deg);
+      .zyrez-menu-open .zyrez-nav-line--a {
+        transform: translateY(4px) rotate(45deg);
       }
-      .zyrez-menu-open .zyrez-nav-icon i:nth-child(2) {
-        top: 15px;
-        transform: rotate(-45deg);
+      .zyrez-menu-open .zyrez-nav-line--b {
+        transform: translateY(-2px) rotate(-45deg);
+      }
+      .zyrez-menu-open .zyrez-nav-icon {
+        transform: none;
       }
 
       /* ===== 3. FULLSCREEN MENU ===== */
@@ -1150,7 +1145,12 @@ body {
           <span class="zyrez-nav-label"
             ><span>Menu</span><span>Close</span></span
           >
-          <span class="zyrez-nav-icon"><i></i><i></i></span>
+          <span class="zyrez-nav-icon" aria-hidden="true">
+            <svg class="zyrez-nav-icon-svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+              <rect class="zyrez-nav-line zyrez-nav-line--a" x="9" y="11" width="14" height="2" rx="1"/>
+              <rect class="zyrez-nav-line zyrez-nav-line--b" x="9" y="17" width="14" height="2" rx="1"/>
+            </svg>
+          </span>
         </button>
       </header>
 
