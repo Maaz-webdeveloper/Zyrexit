@@ -181,8 +181,6 @@
         animate();
       })();
     </script>
-  </body>
-</html>
     <style>
  * {
   margin: 0;
@@ -459,8 +457,7 @@ body {
         flex-direction: column;
         align-items: center;
         text-align: center;
-        height: 100vh; /* min-height ki jagah height: 100vh kar dein taaki scroll na aaye */
-        height: 100svh;
+        height: 100svh; /* full viewport height, no duplicate */
         padding: clamp(80px, 10vh, 110px) 20px 0; /* Padding thodi kam ki hai */
         background:
           radial-gradient(
@@ -539,8 +536,8 @@ body {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        width: 180px;            /* ✅ Width barha kar 180px ki taake dono barabar lagein */
-        height: 46px;            /* ✅ Height barha kar 46px ki */
+        width: 170px;            /* both CTA buttons same size */
+        height: 42px;
         border-radius: 999px;
         font-size: 11px;
         font-weight: 400;
@@ -548,16 +545,15 @@ body {
         line-height: 1;
         text-transform: uppercase;
         transition: transform 0.3s, box-shadow 0.3s, background 0.3s, border-color 0.3s;
-        box-sizing: border-box;  /* ✅ Ensure padding size ke andar rahe */
+        box-sizing: border-box;  /* padding stays inside the declared size */
       }
 /* Book a call button */
       .zyrez-hero-btn--gold {
         display: inline-flex;
         align-items: center;
         position: relative;
-         justify-content: center;   
-        height: 44px;
-        padding: 0 40px 0 15px;
+        justify-content: center;
+        padding: 0 34px 0 14px;
         background: linear-gradient(135deg, var(--zyrez-gold-light), var(--zyrez-gold));
         color: #000;
         border: none;
@@ -572,14 +568,13 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0 20px;   /* Padding adjust ki */
+  padding: 0 14px;
   border: none;
   background-image: url('https://assets.cdn.filesafe.space/bGYkTtwdgUDkTHqNb1v2/media/6ac7ae458c077584b4fa0456.svg');
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: center;
   color: #f9f3f3;
-  height: 44px;      /* Height match ki */
 }
 .zyrez-hero-btn--ghost:hover {
         opacity: 0.9;
@@ -605,36 +600,7 @@ body {
 .zyrez-hero-btn--gold:hover .zyrez-hero-btn-arrow {
   transform: translateY(-50%) translateX(3px); /* 👈 Yahan fix kiya */
 }
-/* ===== MOBILE RESPONSIVE FIX FOR BUTTONS ===== */
-  @media (max-width: 560px) {
-  .zyrez-hero-cta {
-    gap: 10px; /* Gap thoda kam kiya */
-    padding: 0 10px;
-    flex-direction: row;
-    justify-content: center;
-  }
-
-  .zyrez-hero-btn {
-    width: 150px;  /* 👈 Mobile par thodi choti width */
-    height: 38px;  /* 👈 Mobile height */
-  }
-
-  .zyrez-hero-btn--gold {
-    padding: 0 36px 0 10px;
-     justify-content: center;
-  }
-
-  .zyrez-hero-btn--ghost {
-    padding: 0 10px;
-    font-size: 10px;
-  }
-  
-  .zyrez-hero-btn-arrow {
-    width: 28px;
-    height: 28px;
-  }
-}
-      /* ===== 5. VISUAL STAGE: image + orbit ===== */
+/* ===== 5. VISUAL STAGE: image + orbit ===== */
       .zyrez-hero-stage {
         position: relative;
         order: 3;
@@ -846,27 +812,16 @@ body {
       .zyrez-hero-ready .zyrez-hero-giant {
         opacity: 1;
       }
-/* Gradient animation (sample jaisi ping-pong, 6s) */
-@keyframes zyrezGradientLTR {
-  0%   { background-position: 100% 50%; }
-  50%  { background-position: 0% 50%; }
-  100% { background-position: 100% 50%; }
-}
-@keyframes zyrezGradientRTL {
-  0%   { background-position: 0% 50%; }
-  50%  { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+/* Gradient animation: ping-pong sweep, no snap-back */
+@keyframes zyrezShineFlow {
+  from { background-position: 0% 0; }
+  to   { background-position: 100% 0; }
 }
 
-/* Upar wali line: Powering businesses with (left to right) */
 .zyrez-line {
   display: block;
   width: fit-content;
   margin-inline: auto;
-}
-@keyframes zyrezShineFlow {
-  from { background-position: 100% 0; }
-  to   { background-position: 0% 0; }
 }
 
 .zyrez-animated-gradient-title,
@@ -875,7 +830,7 @@ body {
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: zyrezShineFlow 8s linear infinite;
+  animation: zyrezShineFlow 8s linear infinite alternate;
 }
 
 /* Upar wali line: yellow - white - yellow */
@@ -904,7 +859,7 @@ body {
   .zyrez-hero-title { font-size: clamp(3rem, 3.2vw, 4.6rem); max-width: 1300px; }
   .zyrez-hero-text { width: min(100%, 38rem); max-width: 38rem; font-size: 1.2rem; }
 }
-      /* ===== 7. RESPONSIVE ===== */
+      /* ===== 6b. RESPONSIVE ===== */
       @media (min-width: 900px) {
         .zyrez-hero-stage {
           order: 2;
@@ -1005,21 +960,21 @@ body {
   transform-origin: center bottom;
 }
   .zyrez-hero-stage {
-  height: auto;
-  flex: 1 1 0;
-  min-height: 320px;
-}
- .zyrez-hero-stage::after {
-  content: "";
-  position: absolute;
-  left: -40px;
-  right: -40px;
-  bottom: 0;
-  height: 26%;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), #000 92%);
-  z-index: 4;
-  pointer-events: none;
-}
+    height: var(--zyrez-stage-h); /* respect the tuned clamp, don't override to auto */
+    flex: none;
+    min-height: 320px;
+  }
+  .zyrez-hero-stage::after {
+    content: "";
+    position: absolute;
+    left: -40px;
+    right: -40px;
+    bottom: 0;
+    height: 26%;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0), #000 92%);
+    z-index: 4;
+    pointer-events: none;
+  }
 }
       /* ✅ Tablet / iPad / Choti Laptop Screens Ke Liye Fix */
       @media (min-width: 768px) and (max-width: 1024px) {
@@ -1031,20 +986,7 @@ body {
         }
       }
       /* Book a call button: View services ke barabar */
-/* Dono CTA buttons: bilkul same size */
-.zyrez-hero-btn--gold,
-.zyrez-hero-btn--ghost {
-  box-sizing: border-box !important;
-  width: 170px !important;
-  height: 42px !important;
-  font-size: 11px !important;
-}
-.zyrez-hero-btn--gold {
-  padding: 0 34px 0 14px !important;
-}
-.zyrez-hero-btn--ghost {
-  padding: 0 14px !important;
-}
+/* Dono CTA buttons: bilkul same size (base rule already sets 170x42) */
 .zyrez-hero-btn--gold .zyrez-hero-btn-arrow {
   width: 32px;
   height: 32px;
@@ -1327,7 +1269,27 @@ body {
            data-depth        : mouse parallax strength (0-1)
            data-float / data-rot : floating (px) and tilt (deg)
            data-min          : show only when screen width >= this (0 = also on mobile) -->
-  <div class="zyrez-hero-orbit"></div>
+  <div class="zyrez-hero-orbit">
+    <!-- Floating glass cards: data-rx/ry = orbit width/height, data-speed = deg/s,
+         data-phase = start angle, data-depth = mouse parallax, data-float/rot = float/tilt,
+         data-min = show only above this screen width -->
+    <div class="zyrez-hero-card" data-rx="0.42" data-ry="0.22" data-speed="8" data-phase="20" data-depth="0.6" data-float="8" data-rot="4" data-min="900">
+      <span class="zyrez-hero-ico"><svg viewBox="0 0 24 24"><path d="M12 2l9 5-9 5-9-5 9-5zM3 12l9 5 9-5M3 17l9 5 9-5"/></svg></span>
+      <div><b>50+</b><small>Happy clients</small></div>
+    </div>
+    <div class="zyrez-hero-card" data-rx="0.48" data-ry="0.26" data-speed="-6" data-phase="140" data-depth="0.5" data-float="6" data-rot="5" data-min="900">
+      <span class="zyrez-hero-ico"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg></span>
+      <div><b>Fast</b><small>delivery</small></div>
+    </div>
+    <div class="zyrez-hero-card" data-rx="0.44" data-ry="0.24" data-speed="10" data-phase="260" data-depth="0.5" data-float="7" data-rot="4" data-min="900">
+      <span class="zyrez-hero-ico"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 15h-2v-6h2zm0-8h-2V7h2z"/></svg></span>
+      <div><b>24/7</b><small>support</small></div>
+    </div>
+    <div class="zyrez-hero-card" data-rx="0.46" data-ry="0.25" data-speed="-8" data-phase="300" data-depth="0.6" data-float="9" data-rot="6" data-min="900">
+      <span class="zyrez-hero-ico"><svg viewBox="0 0 24 24"><path d="M12 2l9 5-9 5-9-5 9-5zM3 12l9 5 9-5M3 17l9 5 9-5"/></svg></span>
+      <div><b>SEO</b><small>ranked</small></div>
+    </div>
+  </div>
         </div>
       </section>
     </div>
