@@ -100,65 +100,6 @@
   }
 }
 
-/* ===== 3D glass ring ===== */
-.zyrez-ring-wrap {
-  position: absolute;
-  inset: 0;
-  display: none;
-  pointer-events: none;
-  perspective: 1100px;
-  perspective-origin: 50% var(--zyrez-orbit-cy);
-}
-.zyrez-ring-wrap--back { z-index: 2; }
-.zyrez-ring-wrap--front { z-index: 5; }
-@media (min-width: 900px) {
-  .zyrez-ring-wrap { display: block; }
-}
-.zyrez-ring {
-  position: absolute;
-  left: 50%;
-  top: var(--zyrez-orbit-cy);
-  width: 0;
-  height: 0;
-  transform-style: preserve-3d;
-  animation: zyrezRingSpin 24s linear infinite;
-}
-@keyframes zyrezRingSpin {
-  from { transform: rotateX(-12deg) rotateZ(-6deg) rotateY(0deg); }
-  to   { transform: rotateX(-12deg) rotateZ(-6deg) rotateY(360deg); }
-}
-.zyrez-ring-strip,
-.zyrez-ring-card {
-  position: absolute;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-}
-.zyrez-ring-strip {
-  left: calc(var(--zw) / -2);
-  top: calc(var(--zh) / -2);
-  width: var(--zw);
-  height: var(--zh);
-  background: linear-gradient(180deg, rgba(255,255,255,0.34), rgba(255,255,255,0.08));
-  border-top: 1px solid rgba(255,255,255,0.4);
-  border-bottom: 1px solid rgba(255,255,255,0.2);
-}
-.zyrez-ring-card {
-  left: -92px;
-  top: -30px;
-  width: 184px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 0 14px;
-  border-radius: 16px;
-  background: linear-gradient(145deg, rgba(255,255,255,0.95), rgba(235,235,240,0.8));
-  color: #111;
-  text-align: left;
-  box-shadow: 0 14px 30px rgba(0,0,0,0.45);
-}
-.zyrez-ring-card b { display: block; font-size: 14px; line-height: 1.2; }
-.zyrez-ring-card small { display: block; margin-top: 2px; font-size: 10px; line-height: 1.3; color: #555; }
     </style>
     <div class="zyrez-cursor-ball" id="zyrezCursorBall"></div>
     <script>
@@ -237,9 +178,6 @@ body {
         --zyrez-text: #fff;
         --zyrez-muted: rgba(255, 255, 255, 0.68);
         --zyrez-font: "Garet", Arial, sans-serif;
-        --zyrez-card-w: 184px; /* floating card width */
-        --zyrez-card-blur: 10px; /* glass blur (0px = faster on weak phones) */
-        --zyrez-orbit-cy: 56%; /* vertical center of the orbit inside the visual area */
        --zyrez-stage-h: clamp(470px, min(44vw, 62vh), 900px);/* height of the hero image area */
         --zyrez-ease: cubic-bezier(0.76, 0, 0.24, 1);
         position: relative;
@@ -649,10 +587,6 @@ body {
           padding-bottom: 0 !important; /* ✅ Neeche se extra gap hata diya */
         }
 
-        .zyrez-hero-root {
-          --zyrez-card-w: 150px;
-          --zyrez-card-blur: 0px;
-        }
   .zyrez-hero-giant {
     mask-image: none;
     -webkit-mask-image: none;
@@ -664,18 +598,6 @@ body {
   height: auto;                   /* keeps the real ratio, never stretched */
     transform: translateY(27%);    /* how much hides below the screen edge: 0% = show all, 50% = half */
 }
-      .zyrez-hero-ring {
-        position: absolute;
-        left: 50%;
-        top: var(--zyrez-orbit-cy);
-        width: 88%;
-        height: 68%;
-        transform: translate(-50%, -50%);
-        border: 1px dashed rgba(255, 204, 0, 0.2);
-        border-radius: 50%;
-        z-index: 2;
-        pointer-events: none;
-      }
 .zyrez-hero-visual {
   position: absolute;
   inset: 0;
@@ -686,8 +608,7 @@ body {
   align-items: flex-end;     /* ✅ Add karein (Yeh image ko neeche rakhega) */
 }
       
-      .zyrez-hero-img,
-      .zyrez-hero-ph {
+      .zyrez-hero-img {
         position: absolute;
         left: 50%;
         bottom: 0;
@@ -704,104 +625,140 @@ body {
       .zyrez-has-img .zyrez-hero-img {
         opacity: 1;
       }
-      .zyrez-has-img .zyrez-hero-ph {
-        display: none;
-      }
 
-      /* floating glass cards */
+      /* ===== 3D HEAD RING (desktop only) =====
+         All sizes/positions come from CONFIG.ring in the JS.
+         Panel sizes are multiples of the ring radius (--zyrez-ring-r), so everything scales together.
+         Two copies of the same ring: --back (behind the character, far half only)
+         and --front (above the character, near half only), split by backface-visibility. */
       .zyrez-hero-orbit {
+        --zyrez-head-x: 50%;          /* ring center X (set from CONFIG.ring.headX) */
+        --zyrez-head-y: 25%;          /* ring center Y (set from CONFIG.ring.headY) */
+        --zyrez-ring-r: 180px;        /* ring radius (set from CONFIG.ring.radius) */
+        --zyrez-ring-drop: 0px;       /* ring moved down from head center (CONFIG.ring.drop) */
+        --zyrez-ring-tilt-x: -18deg;  /* CONFIG.ring.tiltX */
+        --zyrez-ring-tilt-z: -5deg;   /* CONFIG.ring.tiltZ */
+        --zyrez-ring-spin: 0deg;      /* STEP 2: animate only this value to rotate the whole ring */
         position: absolute;
         inset: 0;
+        display: none;
         pointer-events: none;
       }
-      .zyrez-hero-card {
+      @media (min-width: 900px) {
+        .zyrez-hero-orbit { display: block; }
+      }
+      .zyrez-orbit-layer {
         position: absolute;
-        left: 50%;
-        top: var(--zyrez-orbit-cy);
-        z-index: 5;
-        width: var(--zyrez-card-w);
+        inset: 0;
+        perspective: 1200px;
+        perspective-origin: var(--zyrez-head-x) var(--zyrez-head-y);
+      }
+      .zyrez-orbit-layer--back { z-index: 2; }  /* below .zyrez-hero-visual (3) */
+      .zyrez-orbit-layer--front { z-index: 5; } /* above .zyrez-hero-visual (3) */
+      .zyrez-orbit-ring {
+        position: absolute;
+        left: var(--zyrez-head-x);
+        top: var(--zyrez-head-y);
+        width: 0;
+        height: 0;
+        transform-style: preserve-3d;
+        transform:
+          translateY(var(--zyrez-ring-drop))
+          rotateZ(var(--zyrez-ring-tilt-z))
+          rotateX(var(--zyrez-ring-tilt-x))
+          rotateY(var(--zyrez-ring-spin));
+      }
+      /* each panel gets --w / --h (× radius) from CONFIG.ring.panels */
+      .zyrez-orbit-panel {
+        --u: calc(var(--zyrez-ring-r) / 100); /* 1u = 1% of the radius */
+        position: absolute;
+        left: calc(var(--zyrez-ring-r) * var(--w) / -2);
+        top: calc(var(--zyrez-ring-r) * var(--h) / -2);
+        width: calc(var(--zyrez-ring-r) * var(--w));
+        height: calc(var(--zyrez-ring-r) * var(--h));
+        border-radius: calc(var(--u) * 7);
+        overflow: hidden;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        font-family: var(--zyrez-font);
+      }
+      /* tall frosted glass slab */
+      .zyrez-orbit-panel--glass {
+        background: linear-gradient(
+          100deg,
+          rgba(255, 255, 255, 0.5),
+          rgba(255, 255, 255, 0.16) 45%,
+          rgba(255, 255, 255, 0.32)
+        );
+        border: 1px solid rgba(255, 255, 255, 0.55);
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+        box-shadow:
+          0 12px 30px rgba(0, 0, 0, 0.3),
+          inset 0 1px 0 rgba(255, 255, 255, 0.55);
+      }
+      /* wide frosted white UI card (Focus / Ideas / Plan) */
+      .zyrez-orbit-panel--card {
         display: flex;
         align-items: center;
-        gap: 10px;
-        padding: 12px 14px;
-        border-radius: 18px;
-        text-align: left;
-        will-change: transform;
+        gap: calc(var(--u) * 5);
+        padding: calc(var(--u) * 6);
         background: linear-gradient(
-          145deg,
-          rgba(255, 255, 255, 0.1),
-          rgba(255, 255, 255, 0.03)
+          150deg,
+          rgba(255, 255, 255, 0.9),
+          rgba(244, 244, 247, 0.72)
         );
-        border: 1px solid rgba(255, 255, 255, 0.14);
-        -webkit-backdrop-filter: blur(var(--zyrez-card-blur));
-        backdrop-filter: blur(var(--zyrez-card-blur));
-        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.85);
+        -webkit-backdrop-filter: blur(12px);
+        backdrop-filter: blur(12px);
+        box-shadow: 0 14px 34px rgba(0, 0, 0, 0.35);
+        color: #111;
+        text-align: left;
       }
-      .zyrez-hero-ico {
+      .zyrez-orbit-panel--img {
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        background-color: #111;
+        background-image: var(--zyrez-panel-img), linear-gradient(160deg, #d9d9de, #4a4a52);
+        background-size: cover;
+        background-position: center;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+      }
+      .zyrez-orbit-ico {
         flex: none;
         display: grid;
         place-items: center;
-        width: 34px;
-        height: 34px;
-        border-radius: 10px;
-        background: linear-gradient(
-          135deg,
-          var(--zyrez-gold-light),
-          var(--zyrez-gold)
-        );
-        color: #000;
+        width: calc(var(--u) * 13);
+        height: calc(var(--u) * 13);
+        border-radius: 50%;
+        background: radial-gradient(circle at 35% 30%, #fff 0%, var(--zyrez-ico-bg) 70%);
+        box-shadow: 0 0 calc(var(--u) * 6) var(--zyrez-ico-bg);
+        color: #fff;
       }
-      .zyrez-hero-ico svg {
-        width: 18px;
-        height: 18px;
+      .zyrez-orbit-ico svg {
+        width: 55%;
+        height: 55%;
         fill: none;
         stroke: currentColor;
-        stroke-width: 2;
+        stroke-width: 2.4;
         stroke-linecap: round;
         stroke-linejoin: round;
       }
-      .zyrez-hero-card b {
+      .zyrez-orbit-panel--card b {
         display: block;
-        font-size: 14px;
-        line-height: 1.2;
+        font-size: calc(var(--u) * 8);
+        font-weight: 700;
+        line-height: 1.1;
       }
-      .zyrez-hero-card small {
+      .zyrez-orbit-panel--card small {
         display: block;
-        margin-top: 2px;
-        font-size: 11px;
-        line-height: 1.3;
-        color: var(--zyrez-muted);
+        margin-top: calc(var(--u) * 1.5);
+        font-size: calc(var(--u) * 5);
+        line-height: 1.25;
+        color: #666;
       }
-      .zyrez-hero-card em {
-        font-style: normal;
-        color: var(--zyrez-gold);
-      }
-      .zyrez-hero-avs {
-        display: flex;
-        flex: none;
-      }
-      .zyrez-hero-avs i {
-        width: 24px;
-        height: 24px;
-        margin-left: -8px;
-        border-radius: 50%;
-        border: 2px solid #111;
-        background: linear-gradient(135deg, #ffdd65, #7a5c00);
-      }
-      .zyrez-hero-avs i:first-child {
-        margin-left: 0;
-      }
-      .zyrez-hero-bars {
-        display: flex;
-        flex: none;
-        align-items: flex-end;
-        gap: 3px;
-        height: 26px;
-      }
-      .zyrez-hero-bars i {
-        width: 5px;
-        border-radius: 2px;
-        background: linear-gradient(var(--zyrez-gold-light), var(--zyrez-gold));
+      /* far half (back copy) slightly dimmer */
+      .zyrez-orbit-layer--back .zyrez-orbit-panel {
+        filter: brightness(0.85);
       }
 
       /* ===== 6. ENTRANCE (only when JS is running) ===== */
@@ -814,8 +771,8 @@ body {
         transition-delay: calc(var(--d, 0) * 1s);
       }
       .zyrez-hero-js .zyrez-hero-visual,
-      .zyrez-hero-js .zyrez-hero-card,
-      .zyrez-hero-js .zyrez-hero-giant {
+      .zyrez-hero-js .zyrez-hero-giant,
+      .zyrez-hero-js .zyrez-orbit-panel {
         opacity: 0;
         transition: opacity 1.4s 0.3s;
       }
@@ -824,8 +781,8 @@ body {
         transform: none;
       }
       .zyrez-hero-ready .zyrez-hero-visual,
-      .zyrez-hero-ready .zyrez-hero-card,
-      .zyrez-hero-ready .zyrez-hero-giant {
+      .zyrez-hero-ready .zyrez-hero-giant,
+      .zyrez-hero-ready .zyrez-orbit-panel {
         opacity: 1;
       }
 /* Gradient animation: ping-pong sweep, no snap-back */
@@ -890,10 +847,6 @@ body {
         }
       }
        @media (max-width: 899px) {
-        .zyrez-hero-root {
-          --zyrez-card-w: 150px;
-          --zyrez-card-blur: 0px;
-        }
         .zyrez-hero-stage {
           margin-top: 10px;
           height: auto !important;      /* Stage ki fixed height khatam ki */
@@ -936,31 +889,9 @@ body {
         }
       }
       @media (max-width: 560px) {
-        .zyrez-hero-root {
-          --zyrez-card-w: 132px;
-        }
         .zyrez-hero-eyebrow {
           letter-spacing: 0.3em;
           padding-left: 0.3em;
-        }
-        .zyrez-hero-card {
-          padding: 9px 10px;
-          border-radius: 14px;
-          gap: 8px;
-        }
-        .zyrez-hero-card b {
-          font-size: 12px;
-        }
-        .zyrez-hero-card small {
-          font-size: 10px;
-        }
-        .zyrez-hero-ico {
-          width: 26px;
-          height: 26px;
-        }
-        .zyrez-hero-ico svg {
-          width: 15px;
-          height: 15px;
         }
         .zyrez-nav-logo img {
           height: 45px;
@@ -1292,34 +1223,7 @@ h1::-moz-selection, p::-moz-selection, h1 *::-moz-selection, p *::-moz-selection
               alt=""
             />
           </div>
-          <!-- ============ FLOATING CARDS ============
-           data-rx / data-ry : orbit width / height (fraction of the visual area)
-           data-speed        : degrees per second (negative = opposite direction)
-           data-phase        : start angle (0-360)
-           data-depth        : mouse parallax strength (0-1)
-           data-float / data-rot : floating (px) and tilt (deg)
-           data-min          : show only when screen width >= this (0 = also on mobile) -->
-  <div class="zyrez-hero-orbit">
-    <!-- Floating glass cards: data-rx/ry = orbit width/height, data-speed = deg/s,
-         data-phase = start angle, data-depth = mouse parallax, data-float/rot = float/tilt,
-         data-min = show only above this screen width -->
-    <div class="zyrez-hero-card" data-rx="0.42" data-ry="0.22" data-speed="8" data-phase="20" data-depth="0.6" data-float="8" data-rot="4" data-min="900">
-      <span class="zyrez-hero-ico"><svg viewBox="0 0 24 24"><path d="M12 2l9 5-9 5-9-5 9-5zM3 12l9 5 9-5M3 17l9 5 9-5"/></svg></span>
-      <div><b>50+</b><small>Happy clients</small></div>
-    </div>
-    <div class="zyrez-hero-card" data-rx="0.48" data-ry="0.26" data-speed="-6" data-phase="140" data-depth="0.5" data-float="6" data-rot="5" data-min="900">
-      <span class="zyrez-hero-ico"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg></span>
-      <div><b>Fast</b><small>delivery</small></div>
-    </div>
-    <div class="zyrez-hero-card" data-rx="0.44" data-ry="0.24" data-speed="10" data-phase="260" data-depth="0.5" data-float="7" data-rot="4" data-min="900">
-      <span class="zyrez-hero-ico"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 15h-2v-6h2zm0-8h-2V7h2z"/></svg></span>
-      <div><b>24/7</b><small>support</small></div>
-    </div>
-    <div class="zyrez-hero-card" data-rx="0.46" data-ry="0.25" data-speed="-8" data-phase="300" data-depth="0.6" data-float="9" data-rot="6" data-min="900">
-      <span class="zyrez-hero-ico"><svg viewBox="0 0 24 24"><path d="M12 2l9 5-9 5-9-5 9-5zM3 12l9 5 9-5M3 17l9 5 9-5"/></svg></span>
-      <div><b>SEO</b><small>ranked</small></div>
-    </div>
-  </div>
+          <div class="zyrez-hero-orbit" aria-hidden="true"></div>
         </div>
       </section>
     </div>
@@ -1334,9 +1238,37 @@ h1::-moz-selection, p::-moz-selection, h1 *::-moz-selection, p *::-moz-selection
           fullBleed: true,
           fixedNav: false,
           lockScroll: true,
-          orbitSpeed: 1,
-          floatAmount: 1,
           mouseStrength: 0,
+
+          /* ===== 3D HEAD RING — all tunable values ===== */
+          ring: {
+            /* POSITION: head center as a fraction of the character image
+               (0 = left/top edge, 1 = right/bottom edge) — put it at eye level */
+            headX: 0.5,
+            headY: 0.22,
+            drop: 0.1,       // move ring down from head center (× radius); raise if cards touch the eyes
+            /* SIZE */
+            radius: 0.3,     // ring radius (× character image height) → scales with the stage
+            /* SHAPE */
+            tiltX: -18,      // deg: front of ring lower, back higher (like the reference)
+            tiltZ: -5,       // deg: right side slightly higher
+            speed: 12,       // ROTATION: degrees per second (negative = other direction, 0 = stop)
+            imageRatio: 0.8, // fallback width/height of the character image (only if the browser can't read it)
+            /* PANELS — a = angle on the ring (0 = front center, + = right, 180 = back)
+               w / h = width / height (× radius), y = optional up/down nudge (× radius)
+               card = frosted UI card, img = image panel (PASTE YOUR IMAGE URL), nothing = glass slab */
+            panels: [
+              { a: -10, w: 0.64, h: 0.34, card: { icon: "ideas", color: "#a78bfa", title: "Ideas", text: "Capture everything" } },
+              { a: 49, w: 0.42, h: 0.48, img: "https://placehold.co/300x340/111111/ffdd65?text=IMG+2" },
+              { a: 72, w: 0.4, h: 0.6 },
+              { a: 131, w: 0.56, h: 0.32, card: { icon: "plan", color: "#fb923c", title: "Plan", text: "Turn ideas into action" } },
+              { a: 160, w: 0.4, h: 0.55 },
+              { a: -148, w: 0.62, h: 0.36, card: { icon: "focus", color: "#a3e635", title: "Focus", text: "Deep work, bigger results" } },
+              { a: -120, w: 0.4, h: 0.55 },
+              { a: -100, w: 0.4, h: 0.6 },
+              { a: -51, w: 0.45, h: 0.52, img: "https://placehold.co/300x340/111111/ffcc00?text=IMG+1" },
+            ],
+          },
           /* MENU ITEMS: replace with your real GHL page links */
           menuItems: [
             { label: "Home", href: "#" },
@@ -1421,7 +1353,7 @@ h1::-moz-selection, p::-moz-selection, h1 *::-moz-selection, p *::-moz-selection
           else img.addEventListener("load", hasImg);
         }
 
-        /* ---- Orbit system ---- */
+        /* ---- Mouse parallax (character + giant text), only if CONFIG.mouseStrength > 0 ---- */
         var stage = $(".zyrez-hero-stage"),
           visual = $(".zyrez-hero-visual"),
           giant = $(".zyrez-hero-giant");
@@ -1431,89 +1363,33 @@ h1::-moz-selection, p::-moz-selection, h1 *::-moz-selection, p *::-moz-selection
         var fine = window.matchMedia(
           "(hover:hover) and (pointer:fine)",
         ).matches;
-        var cards = [].slice
-          .call(root.querySelectorAll(".zyrez-hero-card"))
-          .map(function (el) {
-            var d = el.dataset;
-            return {
-              el: el,
-              rx: +d.rx || 0.4,
-              ry: +d.ry || 0.25,
-              sp: +d.speed || 8,
-              ph: +d.phase || 0,
-              dp: +d.depth || 0.5,
-              fl: +d.float || 8,
-              rt: +d.rot || 4,
-              min: +d.min || 0,
-              w: 0,
-              on: true,
-            };
-          });
-        var W = 0,
-          H = 0,
-          VW = 0,
-          T = 0,
-          last = 0,
-          mx = 0,
+        var parallax = fine && CONFIG.mouseStrength > 0;
+        var mx = 0,
           my = 0,
           tx = 0,
           ty = 0,
           run = false,
           vis = true;
 
-        function measure() {
-          var r = stage.getBoundingClientRect();
-          W = r.width;
-          H = r.height;
-          VW = document.documentElement.clientWidth;
-          cards.forEach(function (c) {
-            c.on = VW >= c.min;
-            c.el.style.display = c.on ? "" : "none";
-            c.w = c.on ? c.el.offsetWidth : 0;
-          });
-        }
-        function frame(now) {
-          var dt = last ? (now - last) / 1000 : 0;
-          last = now;
-          T += Math.min(dt, 0.05);
+        function frame() {
           mx += (tx - mx) * 0.06;
           my += (ty - my) * 0.06;
-                  cards.forEach(function (c) {
-            if (!c.on) return;
-            var a = ((c.ph + T * c.sp * CONFIG.orbitSpeed) * Math.PI) / 180,
-              s = Math.sin(a),
-              co = Math.cos(a);
-            var half = Math.max(40, VW / 2 - c.w / 2 - 10);
-            var x = co * Math.min(c.rx * H, half);
-            var y =
-              s * c.ry * H * 0.45 +
-              Math.sin(T * 0.9 + c.ph) * c.fl * CONFIG.floatAmount;
-            var k = fine ? CONFIG.mouseStrength * c.dp * 22 : 0;
-            var rot = Math.sin(T * 0.6 + c.ph) * c.rt;
-            c.el.style.transform =
-              "translate3d(" + (x + mx * k) + "px," + (y + my * k) + "px,0) " +
-              "translate(-50%,-50%) perspective(800px) rotateY(" + co * 55 + "deg) " +
-              "rotateZ(" + rot + "deg) scale(" + (1 + s * 0.18) + ")";
-            c.el.style.zIndex = s > 0 ? 5 : 2; // s > 0: card aage, s < 0: ladke ke peeche
-          });
-          if (fine && CONFIG.mouseStrength) {
-            visual.style.transform =
-              "translate3d(" + -mx * 10 + "px," + -my * 6 + "px,0)";
-            giant.style.transform = "translate3d(" + mx * 14 + "px,0,0)";
-          }
+          visual.style.transform =
+            "translate3d(" + -mx * 10 + "px," + -my * 6 + "px,0)";
+          giant.style.transform = "translate3d(" + mx * 14 + "px,0,0)";
           if (run) requestAnimationFrame(frame);
         }
         function loop() {
-          var should = vis && !document.hidden && !reduce;
+          var should = parallax && vis && !document.hidden && !reduce;
           if (should && !run) {
             run = true;
-            last = 0;
             requestAnimationFrame(frame);
           } else if (!should) run = false;
+          spinLoop();
         }
-        if (fine && CONFIG.mouseStrength) {
+        if (parallax) {
           root.addEventListener("mousemove", function (e) {
-            tx = (e.clientX / VW - 0.5) * 2;
+            tx = (e.clientX / document.documentElement.clientWidth - 0.5) * 2;
             ty = (e.clientY / window.innerHeight - 0.5) * 2;
           });
           root.addEventListener("mouseleave", function () {
@@ -1528,68 +1404,99 @@ h1::-moz-selection, p::-moz-selection, h1 *::-moz-selection, p *::-moz-selection
           }).observe(root);
         }
         document.addEventListener("visibilitychange", loop);
+        /* ---- 3D head ring (built twice: back half + front half) ---- */
+        var orbit = $(".zyrez-hero-orbit");
+        var RING_ICONS = {
+          focus: '<circle cx="12" cy="12" r="4"/>',
+          ideas: '<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.5 1 2.5h6c0-1 .3-1.8 1-2.5A6 6 0 0 0 12 3z"/>',
+          plan: '<path d="M9 11l3 3 8-8"/>',
+        };
+        function buildRing(side) {
+          var layer = document.createElement("div");
+          layer.className = "zyrez-orbit-layer zyrez-orbit-layer--" + side;
+          var ring = document.createElement("div");
+          ring.className = "zyrez-orbit-ring";
+          // back copy: panels face inward, so only the far half is visible
+          var flip = side === "back" ? " rotateY(180deg)" : "";
+          CONFIG.ring.panels.forEach(function (p) {
+            var el = document.createElement("div"),
+              type = p.card ? "card" : p.img ? "img" : "glass";
+            el.className = "zyrez-orbit-panel zyrez-orbit-panel--" + type;
+            el.style.setProperty("--w", p.w);
+            el.style.setProperty("--h", p.h);
+            if (p.card)
+              el.innerHTML =
+                '<span class="zyrez-orbit-ico" style="--zyrez-ico-bg:' + p.card.color +
+                '"><svg viewBox="0 0 24 24">' + (RING_ICONS[p.card.icon] || "") +
+                "</svg></span><div><b>" + p.card.title + "</b><small>" + p.card.text + "</small></div>";
+            if (p.img) el.style.setProperty("--zyrez-panel-img", 'url("' + p.img + '")');
+            el.style.transform =
+              "rotateY(" + p.a + "deg) translateZ(var(--zyrez-ring-r))" +
+              " translateY(calc(var(--zyrez-ring-r) * " + (p.y || 0) + "))" + flip;
+            ring.appendChild(el);
+          });
+          layer.appendChild(ring);
+          orbit.appendChild(layer);
+        }
+        buildRing("back");
+        buildRing("front");
+
+        /* ---- Ring rotation: spins the whole ring via --zyrez-ring-spin
+           (pauses when off-screen, tab hidden, or reduced-motion is on) ---- */
+        var spin = 0,
+          spinOn = false,
+          spinLast = 0;
+        function spinFrame(now) {
+          if (!spinOn) return;
+          var dt = spinLast ? Math.min((now - spinLast) / 1000, 0.05) : 0;
+          spinLast = now;
+          spin = (spin + dt * CONFIG.ring.speed) % 360;
+          orbit.style.setProperty("--zyrez-ring-spin", spin + "deg");
+          requestAnimationFrame(spinFrame);
+        }
+        function spinLoop() {
+          var should = CONFIG.ring.speed !== 0 && vis && !document.hidden && !reduce &&
+            root.classList.contains("zyrez-hero-ready");
+          if (should && !spinOn) {
+            spinOn = true;
+            spinLast = 0;
+            requestAnimationFrame(spinFrame);
+          } else if (!should) spinOn = false;
+        }
+
+        // Size + place the ring from the character's real on-screen box,
+        // so it follows the image at every desktop width (incl. the scale steps).
+        function sizeRing() {
+          var R = CONFIG.ring,
+            s = stage.getBoundingClientRect(),
+            r = img.getBoundingClientRect();
+          if (!s.width || !r.width) return;
+          var ar = img.naturalWidth && img.naturalHeight
+            ? img.naturalWidth / img.naturalHeight
+            : R.imageRatio;
+          var ch = Math.min(r.height, r.width / ar), // object-fit: contain, bottom center
+            cw = ch * ar,
+            left = r.left + (r.width - cw) / 2 - s.left,
+            top = r.bottom - ch - s.top;
+          var rad = ch * R.radius;
+          var set = function (k, v) { orbit.style.setProperty(k, v); };
+          set("--zyrez-head-x", left + cw * R.headX + "px");
+          set("--zyrez-head-y", top + ch * R.headY + "px");
+          set("--zyrez-ring-r", rad + "px");
+          set("--zyrez-ring-drop", rad * R.drop + "px");
+          set("--zyrez-ring-tilt-x", R.tiltX + "deg");
+          set("--zyrez-ring-tilt-z", R.tiltZ + "deg");
+        }
+        img.addEventListener("load", sizeRing);
         window.addEventListener("resize", function () {
           bleed();
-          measure();
-          if (!run) frame(performance.now());
+          sizeRing();
         });
-/* ---- 3D glass ring ---- */
-var orbitBox = $(".zyrez-hero-orbit");
-var RING_N = 12;
-var ringCards = [
-  { t: "Focus", s: "Deep work, bigger results", a: 20,
-    ic: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/>' },
-  { t: "Ideas", s: "Capture everything", a: 140,
-    ic: '<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.5 1 2.5h6c0-1 .3-1.8 1-2.5A6 6 0 0 0 12 3z"/>' },
-  { t: "Plan", s: "Turn ideas into action", a: 260,
-    ic: '<path d="M9 11l3 3 8-8M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h9"/>' },
-];
-function buildRing(cls, inward) {
-  var wrap = document.createElement("div");
-  wrap.className = "zyrez-ring-wrap " + cls;
-  wrap.setAttribute("aria-hidden", "true");
-  var ring = document.createElement("div");
-  ring.className = "zyrez-ring";
-  var flip = inward ? " rotateY(180deg)" : "";
-  for (var i = 0; i < RING_N; i++) {
-    var st = document.createElement("div");
-    st.className = "zyrez-ring-strip";
-    st.style.transform =
-      "rotateY(" + (i * 360) / RING_N + "deg) translateZ(var(--zr))" + flip;
-    ring.appendChild(st);
-  }
-  ringCards.forEach(function (c) {
-    var d = document.createElement("div");
-    d.className = "zyrez-ring-card";
-    d.innerHTML =
-      '<span class="zyrez-hero-ico"><svg viewBox="0 0 24 24">' + c.ic +
-      "</svg></span><div><b>" + c.t + "</b><small>" + c.s + "</small></div>";
-    d.style.transform =
-      "rotateY(" + c.a + "deg) translateZ(calc(var(--zr) + 26px))" + flip;
-    ring.appendChild(d);
-  });
-  wrap.appendChild(ring);
-  orbitBox.appendChild(wrap);
-}
-<!-- buildRing("zyrez-ring-wrap--back", true); -->
-<!-- buildRing("zyrez-ring-wrap--front", false); -->
-function sizeRing() {
-  var r = stage.getBoundingClientRect();
-  var R = Math.min(r.width * 0.26, r.height * 0.6);
-  var w = 2 * R * Math.tan(Math.PI / RING_N) * 1.03;
-  orbitBox.style.setProperty("--zr", R + "px");
-  orbitBox.style.setProperty("--zw", w + "px");
-  orbitBox.style.setProperty("--zh", R * 0.5 + "px");
-}
-sizeRing();
-window.addEventListener("resize", sizeRing);
-window.addEventListener("load", sizeRing);
         /* ---- Start (after the preloader begins leaving, if present) ---- */
         function start() {
           bleed();
-          measure();
+          sizeRing();
           root.classList.add("zyrez-hero-ready");
-          frame(performance.now()); // draw first frame (also covers reduced-motion)
           loop();
         }
         function begin() {
