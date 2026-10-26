@@ -186,7 +186,32 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
+
+h1, p, h1 *, p * {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+/* Selection highlight - positioned at end for maximum specificity */
+h1::selection, p::selection, h1 *::selection, p *::selection,
+h1::-moz-selection, p::-moz-selection, h1 *::-moz-selection, p *::-moz-selection,
+::selection, ::-moz-selection,
+._zyrez-force-selection::selection,
+._zyrez-force-selection::-moz-selection {
+  background-color: #ffcc00 !important;
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+  text-shadow: none !important;
+}
+
+/* Force the selection class on key elements via JS if needed */
 
 html,
 body {
@@ -1123,6 +1148,15 @@ body {
     stroke-linecap: round;
     vector-effect: non-scaling-stroke;
   }
+}
+/* Selection highlight - highest priority */
+h1::selection, p::selection, h1 *::selection, p *::selection,
+h1::-moz-selection, p::-moz-selection, h1 *::-moz-selection, p *::-moz-selection,
+::selection, ::-moz-selection {
+  background-color: #ffcc00 !important;
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+  text-shadow: none !important;
 }
     </style>
 
